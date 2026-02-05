@@ -3,55 +3,143 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Goat Lab Burger Menu</title>
+<title>Goat Lab Burger</title>
 
 <style>
-body{
-  margin:0;
-  background:#ffffff;
-  color:#000000;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  height:100vh;
-  text-align:center;
-}
-.logo{
-  width:200px;
-  margin-bottom:25px;
-  animation:float 2.5s ease-in-out infinite;
-}
-.loader{
-  width:40px;
-  height:40px;
-  border:4px solid #ddd;
-  border-top:4px solid #000;
-  border-radius:50%;
-  margin:25px auto 0;
-  animation:spin 1s linear infinite;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-8px)}
-}
+  :root{
+    --text:#000;
+    --muted:#555;
+    --border:#e8e8e8;
+    --bg:#fff;
+    --btn:#111;
+    --radius:16px;
+  }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+  }
+
+  .wrap{
+    width:min(420px, calc(100% - 28px));
+    padding:32px 0 36px;
+  }
+
+  .logo{
+    width:180px;
+    max-width:70vw;
+    margin:0 auto 18px;
+    display:block;
+    animation:float 2.5s ease-in-out infinite;
+  }
+
+  .title{
+    font-size:22px;
+    font-weight:800;
+    margin:0 0 6px;
+  }
+
+  .tag{
+    color:var(--muted);
+    font-size:13px;
+    margin:0 0 20px;
+  }
+
+  .btn{
+    display:block;
+    width:100%;
+    padding:14px 16px;
+    border-radius:var(--radius);
+    text-decoration:none;
+    font-weight:800;
+    border:1px solid var(--border);
+    margin:10px 0;
+    box-sizing:border-box;
+  }
+
+  .btn.primary{
+    background:var(--btn);
+    color:#fff;
+  }
+
+  .btn.secondary{
+    background:#fff;
+    color:#111;
+  }
+
+  .note{
+    margin-top:16px;
+    font-size:13px;
+    color:var(--muted);
+    line-height:1.7;
+  }
+
+  .small{
+    margin-top:18px;
+    font-size:12px;
+    color:#888;
+  }
+
+  @keyframes float{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-8px)}
+  }
 </style>
 </head>
 
 <body>
 
-<div>
-  <img src="logo.png" class="logo">
-  <div style="font-size:20px;font-weight:bold">جوت لاب برجر</div>
-  <div style="color:#555;font-size:14px">جاري فتح المينيو...</div>
-  <div class="loader"></div>
-</div>
+<main class="wrap">
 
-<script>
-const menuURL = "https://drive.google.com/file/d/1bePaR4lUAXzNWxHmCVvqC1k80AcoHqOn/preview";
-setTimeout(()=>{ window.location.href = menuURL; },2500);
-</script>
+  <!-- الشعار -->
+  <img src="logo.png" class="logo" alt="Goat Lab Burger"
+       onerror="this.style.display='none'">
+
+  <!-- الاسم -->
+  <div class="title">جوت لاب برجر 🐐🔥</div>
+  <div class="tag">Greatest Of All Time</div>
+
+  <!-- زر المينيو -->
+  <a id="menuBtn" class="btn primary"
+     href="https://drive.google.com/file/d/1bePaR4lUAXzNWxHmCVvqC1k80AcoHqOn/preview"
+     target="_blank" rel="noopener">
+    📖 افتح المينيو
+  </a>
+
+  <!-- روابط التواصل -->
+  <a class="btn secondary"
+     href="https://www.instagram.com/goatburger.om?igsh=cnJpang0YjBpMnRk"
+     target="_blank" rel="noopener">
+    📸 إنستجرام
+  </a>
+
+  <a class="btn secondary"
+     href="https://www.snapchat.com/unlock/?type=SNAPCODE&uuid=24f979518691434faf3fa2b6ffcdf425&metadata=01"
+     target="_blank" rel="noopener">
+    👻 فلتر سناب
+  </a>
+
+  <a class="btn secondary"
+     href="https://maps.app.goo.gl/9JZ7E6RcKXPKV4mT9?g_st=ic"
+     target="_blank" rel="noopener">
+    ⭐ قيّمنا على Google
+  </a>
+
+  <!-- عبارة ختامية -->
+  <div class="note">
+    عيش التجربة… مو بس وجبة 🐐🔥
+  </div>
+
+  <div class="small">© Goat Lab Burger</div>
+
+</main>
 
 </body>
 </html>
