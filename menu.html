@@ -104,18 +104,32 @@
     .search input::placeholder{color:rgba(255,255,255,.45)}
     .search input:focus{border-color:rgba(214,180,90,.55); box-shadow:0 0 0 6px rgba(214,180,90,.10);}
 
-    .chips{display:flex; gap:8px; flex-wrap:wrap; padding:8px 0 2px;}
-    .chip{
-      border:1px solid var(--line);
-      background:var(--chip);
-      padding:10px 12px;
-      border-radius:999px;
-      font-size:13px;
-      cursor:pointer;
-      user-select:none;
-      transition:.12s;
-      color:var(--fg);
-    }
+    ..chips{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding:14px 0 6px;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+}
+
+.chips::-webkit-scrollbar{
+  display:none;
+}
+
+.chip{
+  flex:0 0 auto;
+  scroll-snap-align:start;
+  border:1px solid var(--line);
+  background:var(--chip);
+  padding:12px 18px;
+  border-radius:999px;
+  font-size:14px;
+  cursor:pointer;
+  transition:.15s;
+  white-space:nowrap;
+  color:var(--fg);
+}
     .chip:hover{border-color:rgba(214,180,90,.35); background:rgba(214,180,90,.08)}
     .chip.active{
       background:linear-gradient(135deg, rgba(214,180,90,.95), rgba(214,180,90,.65));
