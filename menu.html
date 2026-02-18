@@ -104,13 +104,16 @@
     .search input::placeholder{color:rgba(255,255,255,.45)}
     .search input:focus{border-color:rgba(214,180,90,.55); box-shadow:0 0 0 6px rgba(214,180,90,.10);}
 
-    ..chips{
+  .chips{
   display:flex;
-  gap:12px;
+  flex-direction:row;
+  gap:14px;
   overflow-x:auto;
+  overflow-y:hidden;
   padding:14px 0 6px;
   scroll-snap-type:x mandatory;
   -webkit-overflow-scrolling:touch;
+  white-space:nowrap;
 }
 
 .chips::-webkit-scrollbar{
@@ -118,13 +121,17 @@
 }
 
 .chip{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
   flex:0 0 auto;
+  min-width:160px;
   scroll-snap-align:start;
   border:1px solid var(--line);
   background:var(--chip);
-  padding:12px 18px;
+  padding:14px 22px;
   border-radius:999px;
-  font-size:14px;
+  font-size:15px;
   cursor:pointer;
   transition:.15s;
   white-space:nowrap;
