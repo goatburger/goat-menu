@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>جوت لاب برجر</title>
+<title>جوت لاب برجر | Goat Lab Burger</title>
 
 <style>
   :root{
-    --text:#000;
-    --muted:#555;
-    --border:#e8e8e8;
-    --bg:#fff;
+    --text:#111;
+    --muted:#666;
+    --border:#eaeaea;
+    --bg:#ffffff;
     --btn:#111;
-    --radius:16px;
+    --radius:18px;
   }
 
   body{
@@ -29,39 +29,48 @@
 
   .wrap{
     width:min(420px, calc(100% - 28px));
-    padding:32px 0 36px;
+    padding:40px 0 40px;
   }
 
   .logo{
-    width:180px;
+    width:170px;
     max-width:70vw;
-    margin:0 auto 18px;
+    margin:0 auto 20px;
     display:block;
     animation:float 2.5s ease-in-out infinite;
   }
 
   .title{
-    font-size:24px;
+    font-size:26px;
     font-weight:900;
     margin:0 0 6px;
   }
 
+  .title-en{
+    font-size:14px;
+    color:#888;
+    letter-spacing:1px;
+    margin-bottom:16px;
+  }
+
   .tag{
     color:var(--muted);
-    font-size:13px;
-    margin:0 0 22px;
+    font-size:14px;
+    margin:0 0 24px;
+    line-height:1.6;
   }
 
   .btn{
     display:block;
     width:100%;
-    padding:14px 16px;
+    padding:15px 16px;
     border-radius:var(--radius);
     text-decoration:none;
     font-weight:800;
     border:1px solid var(--border);
-    margin:10px 0;
+    margin:12px 0;
     box-sizing:border-box;
+    transition:.2s;
   }
 
   .btn.primary{
@@ -74,17 +83,21 @@
     color:#111;
   }
 
+  .btn:hover{
+    transform:translateY(-2px);
+  }
+
   .note{
-    margin-top:18px;
+    margin-top:22px;
     font-size:14px;
     color:var(--muted);
     line-height:1.7;
   }
 
   .small{
-    margin-top:18px;
+    margin-top:20px;
     font-size:12px;
-    color:#888;
+    color:#999;
   }
 
   @keyframes float{
@@ -98,46 +111,56 @@
 
 <main class="wrap">
 
-  <!-- الشعار -->
-  <img src="logo-white-transparent.png" class="logo" alt="جوت لاب برجر"
+  <!-- الشعار الأسود -->
+  <img src="logo.png" class="logo" alt="Goat Lab Burger"
        onerror="this.style.display='none'">
 
-  <!-- الاسم -->
+  <!-- الاسم عربي + إنجليزي -->
   <div class="title">جوت لاب برجر 🐐🔥</div>
-  <div class="tag">الأفضل على الإطلاق</div>
+  <div class="title-en">GOAT LAB BURGER</div>
+
+  <div class="tag">
+    الأفضل على الإطلاق<br>
+    <span style="font-size:13px;color:#888;">
+      Greatest Of All Time
+    </span>
+  </div>
 
   <!-- زر المينيو -->
   <a class="btn primary"
      href="menu.html"
      target="_blank" rel="noopener">
-    📖 تصفّح المينيو
+    📖 تصفّح المينيو • Open Menu
   </a>
 
   <!-- روابط التواصل -->
   <a class="btn secondary"
      href="https://www.instagram.com/goatburger.om?igsh=cnJpang0YjBpMnRk"
      target="_blank" rel="noopener">
-    📸 حسابنا على إنستجرام
+    📸 إنستجرام • Instagram
   </a>
 
   <a class="btn secondary"
      href="https://www.snapchat.com/unlock/?type=SNAPCODE&uuid=24f979518691434faf3fa2b6ffcdf425&metadata=01"
      target="_blank" rel="noopener">
-    👻 فلتر سناب شات
+    👻 فلتر سناب • Snapchat Filter
   </a>
 
   <a class="btn secondary"
      href="https://maps.app.goo.gl/9JZ7E6RcKXPKV4mT9?g_st=ic"
      target="_blank" rel="noopener">
-    ⭐ قيّمنا على خرائط Google
+    ⭐ قيّمنا • Rate Us on Google
   </a>
 
   <!-- عبارة ختامية -->
   <div class="note">
-    عيش التجربة… مو مجرد وجبة 🐐🔥
+    عيش التجربة… مو مجرد وجبة 🐐🔥<br>
+    <span style="font-size:13px;color:#888;">
+      Experience more than just a meal.
+    </span>
   </div>
 
-  <div class="small">© 2026 جوت لاب برجر</div>
+  <div class="small">© 2026 Goat Lab Burger</div>
 
 </main>
 
