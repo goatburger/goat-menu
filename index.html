@@ -21,17 +21,21 @@
   *{box-sizing:border-box}
 
   body{
-    margin:0;
-    background:var(--bg);
-    color:var(--text);
-    font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:28px 14px;
-  }
+  margin:0;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(0,0,0,.04), transparent 50%),
+    radial-gradient(circle at 85% 100%, rgba(0,0,0,.03), transparent 40%),
+    #f3f3f3;
+
+  color:var(--text);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:28px 14px;
+}
 
   .wrap{
     width:min(460px, 100%);
@@ -94,7 +98,12 @@
     letter-spacing:.6px;
     margin-top:4px;
   }
-
+  
+.sub .en{
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+  
   .cta{
     margin:16px 0 12px;
     position:relative;
@@ -118,11 +127,11 @@
   }
 
   .btn.primary{
-    background:var(--btn);
-    color:#fff;
-    box-shadow:var(--shadow2);
-    border-color:rgba(0,0,0,.2);
-  }
+  background:linear-gradient(145deg,#000,#1a1a1a);
+  color:#fff;
+  box-shadow:0 12px 30px rgba(0,0,0,.25);
+  border:1px solid rgba(255,255,255,.06);
+}
   .btn.primary:hover{ transform:translateY(-2px) scale(1.01); }
   .btn.primary:active{ transform:translateY(0px) scale(.99); }
 
@@ -174,7 +183,7 @@
       <img src="logo.png" class="logo" alt="Goat Lab Burger"
            onerror="this.style.display='none'">
 
-      <h1 class="title"> جوت لاب برجر 🔥🐐 </h1>
+      <h1 class="title"> جوت لاب برجر 🐐🔥 </h1>
 
       <p class="sub">
         مو مجرد برجر… هذا GOAT
