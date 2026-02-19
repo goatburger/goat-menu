@@ -7,13 +7,18 @@
 
 <style>
   :root{
-    --text:#111;
-    --muted:#666;
-    --border:#eaeaea;
-    --bg:#ffffff;
-    --btn:#111;
-    --radius:18px;
+    --bg:#f3f3f3;
+    --card:#ffffff;
+    --text:#0f0f10;
+    --muted:#6a6a6a;
+    --border:rgba(0,0,0,.08);
+    --shadow:0 18px 45px rgba(0,0,0,.12);
+    --shadow2:0 12px 30px rgba(0,0,0,.14);
+    --radius:22px;
+    --btn:#000;
   }
+
+  *{box-sizing:border-box}
 
   body{
     margin:0;
@@ -25,144 +30,193 @@
     align-items:center;
     justify-content:center;
     text-align:center;
+    padding:28px 14px;
   }
 
   .wrap{
-    width:min(420px, calc(100% - 28px));
-    padding:40px 0 40px;
+    width:min(460px, 100%);
+  }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:26px 18px 22px;
+    box-shadow:var(--shadow);
+    position:relative;
+    overflow:hidden;
+  }
+
+  /* لمسة ستريت خفيفة */
+  .card::before{
+    content:"";
+    position:absolute;
+    inset:-2px;
+    background:
+      radial-gradient(650px 220px at 50% -20px, rgba(0,0,0,.06), transparent 60%),
+      radial-gradient(220px 220px at 105% 25%, rgba(0,0,0,.045), transparent 60%),
+      radial-gradient(220px 220px at -5% 65%, rgba(0,0,0,.04), transparent 60%);
+    pointer-events:none;
   }
 
   .logo{
-    width:170px;
-    max-width:70vw;
-    margin:0 auto 20px;
+    width:150px;
+    max-width:62vw;
+    margin:4px auto 14px;
     display:block;
-    animation:float 2.5s ease-in-out infinite;
+    animation:float 2.7s ease-in-out infinite;
+    position:relative;
+    z-index:1;
   }
 
   .title{
     font-size:26px;
-    font-weight:900;
+    font-weight:950;
     margin:0 0 6px;
+    letter-spacing:.2px;
+    position:relative;
+    z-index:1;
   }
 
-  .title-en{
+  .sub{
+    margin:0 0 12px;
     font-size:14px;
-    color:#888;
-    letter-spacing:1px;
-    margin-bottom:16px;
-  }
-
-  .tag{
     color:var(--muted);
-    font-size:14px;
-    margin:0 0 24px;
     line-height:1.6;
+    position:relative;
+    z-index:1;
+  }
+
+  .sub .en{
+    display:block;
+    font-size:13px;
+    color:#8a8a8a;
+    letter-spacing:.6px;
+    margin-top:4px;
+  }
+
+  .cta{
+    margin:16px 0 12px;
+    position:relative;
+    z-index:1;
   }
 
   .btn{
-    display:block;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
     width:100%;
     padding:15px 16px;
-    border-radius:var(--radius);
+    border-radius:18px;
     text-decoration:none;
-    font-weight:800;
+    font-weight:900;
     border:1px solid var(--border);
     margin:12px 0;
-    box-sizing:border-box;
-    transition:.2s;
+    transition:.18s ease;
+    user-select:none;
   }
 
   .btn.primary{
     background:var(--btn);
     color:#fff;
+    box-shadow:var(--shadow2);
+    border-color:rgba(0,0,0,.2);
   }
+  .btn.primary:hover{ transform:translateY(-2px) scale(1.01); }
+  .btn.primary:active{ transform:translateY(0px) scale(.99); }
 
   .btn.secondary{
     background:#fff;
     color:#111;
   }
+  .btn.secondary:hover{ transform:translateY(-2px); }
+  .btn.secondary:active{ transform:translateY(0px) scale(.99); }
 
-  .btn:hover{
-    transform:translateY(-2px);
-  }
+  .emoji{font-size:18px; line-height:1}
+  .arrow{font-weight:900; opacity:.85}
 
   .note{
-    margin-top:22px;
+    margin-top:14px;
     font-size:14px;
-    color:var(--muted);
+    color:#555;
     line-height:1.7;
+    position:relative;
+    z-index:1;
+  }
+  .note .en{
+    display:block;
+    font-size:13px;
+    color:#8a8a8a;
+    margin-top:4px;
   }
 
   .small{
-    margin-top:20px;
+    margin-top:16px;
     font-size:12px;
-    color:#999;
+    color:#9a9a9a;
+    position:relative;
+    z-index:1;
   }
 
   @keyframes float{
     0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-8px)}
+    50%{transform:translateY(-7px)}
   }
 </style>
 </head>
 
 <body>
+  <main class="wrap">
+    <section class="card">
 
-<main class="wrap">
+      <!-- الشعار (استخدم اسم ملفك الحقيقي) -->
+      <img src="logo.png" class="logo" alt="Goat Lab Burger"
+           onerror="this.style.display='none'">
 
-  <!-- الشعار الأسود -->
-  <img src="logo.png" class="logo" alt="Goat Lab Burger"
-       onerror="this.style.display='none'">
+      <h1 class="title">🔥🐐 جوت لاب برجر</h1>
 
-  <!-- الاسم عربي + إنجليزي -->
-  <div class="title">جوت لاب برجر 🐐🔥</div>
-  <div class="title-en">GOAT LAB BURGER</div>
+      <p class="sub">
+        مو مجرد برجر… هذا GOAT
+        <span class="en">Not just a burger. This is GOAT.</span>
+      </p>
 
-  <div class="tag">
-    الأفضل على الإطلاق<br>
-    <span style="font-size:13px;color:#888;">
-      Greatest Of All Time
-    </span>
-  </div>
+      <div class="cta">
+        <a class="btn primary" href="menu.html" target="_blank" rel="noopener">
+          <span class="emoji">📖</span>
+          تصفّح المينيو • Open Menu
+          <span class="arrow">↗</span>
+        </a>
 
-  <!-- زر المينيو -->
-  <a class="btn primary"
-     href="menu.html"
-     target="_blank" rel="noopener">
-    📖 تصفّح المينيو • Open Menu
-  </a>
+        <a class="btn secondary"
+           href="https://www.instagram.com/goatburger.om?igsh=cnJpang0YjBpMnRk"
+           target="_blank" rel="noopener">
+          <span class="emoji">📸</span>
+          إنستجرام • Instagram
+        </a>
 
-  <!-- روابط التواصل -->
-  <a class="btn secondary"
-     href="https://www.instagram.com/goatburger.om?igsh=cnJpang0YjBpMnRk"
-     target="_blank" rel="noopener">
-    📸 إنستجرام • Instagram
-  </a>
+        <a class="btn secondary"
+           href="https://www.snapchat.com/unlock/?type=SNAPCODE&uuid=24f979518691434faf3fa2b6ffcdf425&metadata=01"
+           target="_blank" rel="noopener">
+          <span class="emoji">👻</span>
+          فلتر سناب • Snapchat Filter
+        </a>
 
-  <a class="btn secondary"
-     href="https://www.snapchat.com/unlock/?type=SNAPCODE&uuid=24f979518691434faf3fa2b6ffcdf425&metadata=01"
-     target="_blank" rel="noopener">
-    👻 فلتر سناب • Snapchat Filter
-  </a>
+        <a class="btn secondary"
+           href="https://maps.app.goo.gl/9JZ7E6RcKXPKV4mT9?g_st=ic"
+           target="_blank" rel="noopener">
+          <span class="emoji">⭐</span>
+          قيّمنا • Rate Us on Google
+        </a>
+      </div>
 
-  <a class="btn secondary"
-     href="https://maps.app.goo.gl/9JZ7E6RcKXPKV4mT9?g_st=ic"
-     target="_blank" rel="noopener">
-    ⭐ قيّمنا • Rate Us on Google
-  </a>
+      <div class="note">
+       إذا ما جرّبت… فاتك كثير 😎🔥
+        <span class="en">Ready to taste the title?</span>
+      </div>
 
-  <!-- عبارة ختامية -->
-  <div class="note">
-    عيش التجربة… مو مجرد وجبة 🐐🔥<br>
-    <span style="font-size:13px;color:#888;">
-      Experience more than just a meal.
-    </span>
-  </div>
-
-  <div class="small">© 2026 Goat Lab Burger</div>
-
-</main>
-
+      <div class="small">© 2026 Goat Lab Burger</div>
+    </section>
+  </main>
 </body>
 </html>
