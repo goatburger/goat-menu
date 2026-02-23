@@ -104,39 +104,37 @@
     .search input::placeholder{color:rgba(255,255,255,.45)}
     .search input:focus{border-color:rgba(214,180,90,.55); box-shadow:0 0 0 6px rgba(214,180,90,.10);}
 
-  .chips{
-  display:flex;
-  flex-direction:row;
-  gap:10px;
-  overflow-x:auto;
-  overflow-y:hidden;
-  padding:14px 0 6px;
-  scroll-snap-type:x mandatory;
-  -webkit-overflow-scrolling:touch;
-  white-space:nowrap;
-}
+    .chips{
+      display:flex;
+      flex-direction:row;
+      gap:10px;
+      overflow-x:auto;
+      overflow-y:hidden;
+      padding:14px 0 6px;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;
+      white-space:nowrap;
+    }
 
-.chips::-webkit-scrollbar{
-  display:none;
-}
+    .chips::-webkit-scrollbar{display:none;}
 
-.chip{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  flex:0 0 auto;
-  min-width:160px;
-  scroll-snap-align:start;
-  border:1px solid var(--line);
-  background:var(--chip);
-  padding:14px 22px;
-  border-radius:999px;
-  font-size:15px;
-  cursor:pointer;
-  transition:.15s;
-  white-space:nowrap;
-  color:var(--fg);
-}
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      flex:0 0 auto;
+      min-width:160px;
+      scroll-snap-align:start;
+      border:1px solid var(--line);
+      background:var(--chip);
+      padding:14px 22px;
+      border-radius:999px;
+      font-size:15px;
+      cursor:pointer;
+      transition:.15s;
+      white-space:nowrap;
+      color:var(--fg);
+    }
     .chip:hover{border-color:rgba(214,180,90,.35); background:rgba(214,180,90,.08)}
     .chip.active{
       background:linear-gradient(135deg, rgba(214,180,90,.95), rgba(214,180,90,.65));
@@ -189,6 +187,28 @@
       background:rgba(214,180,90,.95);
       color:#0b0b0b;
       font-weight:950;
+      z-index:3;
+    }
+
+    /* NEW: Image styles */
+    .imgWrap{
+      width:100%;
+      height:170px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin-bottom:12px;
+      border:1px solid rgba(255,255,255,.06);
+      background:rgba(255,255,255,.02);
+      border-radius:14px;
+      overflow:hidden;
+    }
+    .imgWrap img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      filter: drop-shadow(0 16px 30px rgba(0,0,0,.55));
+      transform: translateZ(0);
     }
 
     .title{display:flex; justify-content:space-between; gap:10px; align-items:flex-start;}
@@ -253,6 +273,27 @@
     .sheetBody .big{font-size:16px; font-weight:950; margin:0 0 6px;}
     .sheetBody .en{margin:0 0 10px; color:var(--muted); direction:ltr; text-align:left;}
     .sheetBody .p{margin:0 0 12px; color:rgba(255,255,255,.80);}
+
+    /* NEW: Modal image */
+    .modalImg{
+      width:100%;
+      height:220px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin:0 0 12px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.02);
+      border-radius:16px;
+      overflow:hidden;
+    }
+    .modalImg img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      filter: drop-shadow(0 18px 34px rgba(0,0,0,.60));
+    }
+
     .sheetBody .meta{
       display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;
       border-top:1px solid var(--line);
@@ -324,119 +365,117 @@
     const ITEMS = [
       { id:"b1", cat:"burgers", ar:"جوت برجر", en:"GOAT Burger", price:"1.000 ر.ع",
         desc_ar:"شريحة لحم محلي طازج مع شريحة الجبن وصوص جوت برجر الخاص.",
-        desc_en:"Fresh local beef patty with cheese slice and GOAT special burger sauce.", tags:["⭐ الأكثر طلبًا"], spicy:false },
+        desc_en:"Fresh local beef patty with cheese slice and GOAT special burger sauce.",
+        image:"b1.png",
+        tags:["⭐ الأكثر طلبًا"], spicy:false },
 
       { id:"b2", cat:"burgers", ar:"دبل جوت برجر", en:"Double GOAT Burger", price:"1.500 ر.ع",
         desc_ar:"٢ شريحة لحم محلي طازج مع ٢ شريحة جبن وصوص جوت برجر الخاص.",
-        desc_en:"2 fresh local beef patties with 2 cheese slices and GOAT special burger sauce.", tags:[], spicy:false },
+        desc_en:"2 fresh local beef patties with 2 cheese slices and GOAT special burger sauce.",
+        image:"",
+        tags:[], spicy:false },
 
       { id:"b3", cat:"burgers", ar:"جوت برجر تريبل", en:"Triple GOAT Burger", price:"2.000 ر.ع",
         desc_ar:"٣ شريحة لحم محلي طازج مع ٣ شرائح جبن وصوص جوت برجر الخاص.",
-        desc_en:"3 fresh local beef patties with 3 cheese slices and GOAT special burger sauce.", tags:[], spicy:false },
+        desc_en:"3 fresh local beef patties with 3 cheese slices and GOAT special burger sauce.",
+        image:"",
+        tags:[], spicy:false },
 
-       {
-  id: "b4",
-  cat: "burgers",
-  ar: "برجر مشاكيك",
-  en: "Mashakeek Burger",
-  price: "1.000 ر.ع",
-  desc_ar: "قطع مشاكيك مشوية مع صوص جوت برجر الخاص داخل خبز طازج.",
-  desc_en: "Grilled mashakeek pieces with GOAT special burger sauce in fresh bun.",
-  tags: [],
-  spicy: false
-},
+      { id:"b4", cat:"burgers", ar:"برجر مشاكيك", en:"Mashakeek Burger", price:"1.000 ر.ع",
+        desc_ar:"قطع مشاكيك مشوية مع صوص جوت برجر الخاص داخل خبز طازج.",
+        desc_en:"Grilled mashakeek pieces with GOAT special burger sauce in fresh bun.",
+        image:"b2.png",
+        tags:[], spicy:false },
 
-    {
-  id: "b5",
-  cat: "burgers",
-  ar: "برجر المشروم",
-  en: "Mushroom GOAT Burger",
-  price: "1.200 ر.ع",
-  desc_ar: "شريحة لحم طازج مع شريحة الجبن، صلصة المشروم، البصل المكرمل، وصوص جوت الخاص.",
-  desc_en: "Fresh beef patty with cheese slice, mushroom sauce, caramelized onions, and GOAT special sauce.",
-  tags: [],
-  spicy: false
-},
+      { id:"b5", cat:"burgers", ar:"برجر المشروم", en:"Mushroom GOAT Burger", price:"1.200 ر.ع",
+        desc_ar:"شريحة لحم طازج مع شريحة الجبن، صلصة المشروم، البصل المكرمل، وصوص جوت الخاص.",
+        desc_en:"Fresh beef patty with cheese slice, mushroom sauce, caramelized onions, and GOAT special sauce.",
+        image:"",
+        tags:[], spicy:false },
 
-        {
-  id: "b6",
-  cat: "burgers",
-  ar: "جوت برجر دجاج",
-  en: "GOAT Chicken Burger",
-  price: "1.000 ر.ع",
-  desc_ar: "شريحة دجاج مفروم طازج متبل بخلطة جوت الخاصة، مشوية بإتقان، مع شريحة جبن وصوص جوت داخل خبز طازج.",
-  desc_en: "Fresh seasoned minced chicken patty grilled to perfection with cheese slice and GOAT special sauce in a fresh bun.",
-  tags: ["🐔 دجاج"],
-  spicy: false
-},
-      
+      { id:"b6", cat:"burgers", ar:"جوت برجر دجاج", en:"GOAT Chicken Burger", price:"1.000 ر.ع",
+        desc_ar:"شريحة دجاج مفروم طازج متبل بخلطة جوت الخاصة، مشوية بإتقان، مع شريحة جبن وصوص جوت داخل خبز طازج.",
+        desc_en:"Fresh seasoned minced chicken patty grilled to perfection with cheese slice and GOAT special sauce in a fresh bun.",
+        image:"",
+        tags:["🐔 دجاج"], spicy:false },
+
       { id:"f1", cat:"fries", ar:"بطاطس مقلية", en:"French Fries", price:"0.500 ر.ع",
         desc_ar:"بطاطس مقرمشة مقلية مع ملح.",
-        desc_en:"Crispy fries seasoned with salt.", tags:[], spicy:false },
+        desc_en:"Crispy fries seasoned with salt.",
+        image:"",
+        tags:[], spicy:false },
 
       { id:"f2", cat:"fries", ar:"فرايز مشاكيك", en:"Mashakeek Fries", price:"1.500 ر.ع",
         desc_ar:"البطاطس المقلية مع لحم المشاكيك الطازج وصوص جوت برجر الخاص.",
-        desc_en:"Fries topped with fresh mashakeek meat and GOAT special burger sauce.", tags:["⭐ الأكثر طلبًا"], spicy:false },
+        desc_en:"Fries topped with fresh mashakeek meat and GOAT special burger sauce.",
+        image:"f1.png",
+        tags:["⭐ الأكثر طلبًا"], spicy:false },
 
       { id:"f3", cat:"fries", ar:"سبيشل جوت فرايز", en:"Special GOAT Fries", price:"2.000 ر.ع",
         desc_ar:"البطاطس المقلية مع لحم المشاكيك الطازج والخس والبصل مع صوص الصبار وصوص جوت برجر الخاص.",
-        desc_en:"Fries with fresh mashakeek meat, lettuce, onions, cactus sauce, and GOAT special burger sauce.", tags:["⭐ الأكثر طلبًا"], spicy:false },
+        desc_en:"Fries with fresh mashakeek meat, lettuce, onions, cactus sauce, and GOAT special burger sauce.",
+        image:"f2.png",
+        tags:["⭐ الأكثر طلبًا"], spicy:false },
 
-         {
-  id: "f4",
-  cat: "fries",
-  ar: "فرايز المشاكيك والمشروم",
-  en: "Mashakeek & Mushroom Fries",
-  price: "1.700 ر.ع",
-  desc_ar: "بطاطس مقلية مع مشاكيك طازجة وصلصة الفطر.",
-  desc_en: "Fries topped with fresh mashakeek and mushroom sauce.",
-  tags: [],
-  spicy: false
-},
-      
+      { id:"f4", cat:"fries", ar:"فرايز المشاكيك والمشروم", en:"Mashakeek & Mushroom Fries", price:"1.700 ر.ع",
+        desc_ar:"بطاطس مقلية مع مشاكيك طازجة وصلصة الفطر.",
+        desc_en:"Fries topped with fresh mashakeek and mushroom sauce.",
+        image:"f3.png",
+        tags:[], spicy:false },
+
       { id:"m1", cat:"mashakeek", ar:"مشاكيك", en:"Mashakeek Skewers", price:"0.200 ر.ع",
         desc_ar:"مشاكيك مطهي ع الفحم متبل بالفلفل، ملح وبهارات مشكله.",
-        desc_en:"Charcoal-grilled mashakeek, seasoned with pepper, salt, and mixed spices.", tags:[], spicy:false },
+        desc_en:"Charcoal-grilled mashakeek, seasoned with pepper, salt, and mixed spices.",
+        image:"",
+        tags:[], spicy:false },
 
-      {
-  id: "m2",
-  cat: "mashakeek",
-  ar: "ساندويتش مشاكيك لبناني",
-  en: "Lebanese Mashakeek Sandwich",
-  price: "0.500 ر.ع",
-  desc_ar: "قطع مشاكيك مشوية على الفحم بنكهة مدخنة مميزة، ملفوفة داخل خبز لبناني طازج مع صوص جوت الخاص.",
-  desc_en: "Charcoal-grilled beef mashakeek pieces wrapped in fresh Lebanese bread with GOAT special sauce.",
-  tags: ["🔥 جديد"],
-  spicy: false
-},
-      
+      { id:"m2", cat:"mashakeek", ar:"ساندويتش مشاكيك لبناني", en:"Lebanese Mashakeek Sandwich", price:"0.500 ر.ع",
+        desc_ar:"قطع مشاكيك مشوية على الفحم بنكهة مدخنة مميزة، ملفوفة داخل خبز لبناني طازج مع صوص جوت الخاص.",
+        desc_en:"Charcoal-grilled beef mashakeek pieces wrapped in fresh Lebanese bread with GOAT special sauce.",
+        image:"",
+        tags:["🔥 جديد"], spicy:false },
+
       { id:"d1", cat:"drinks", ar:"مياه", en:"Water", price:"0.100 ر.ع",
         desc_ar:"ماء بارد معتدل.",
-        desc_en:"Chilled drinking water.", tags:[], spicy:false },
+        desc_en:"Chilled drinking water.",
+        image:"",
+        tags:[], spicy:false },
 
       { id:"d2", cat:"drinks", ar:"كينزا ليمون", en:"Kinza Lemon (300ml)", price:"0.300 ر.ع",
         desc_ar:"مشروب غازي منعش بنكهة الليمون بحجم 300 مل.",
-        desc_en:"Refreshing lemon-flavored soft drink (300ml).", tags:[], spicy:false },
+        desc_en:"Refreshing lemon-flavored soft drink (300ml).",
+        image:"",
+        tags:[], spicy:false },
 
       { id:"d3", cat:"drinks", ar:"كينزا حمضيات", en:"Kinza Citrus (300ml)", price:"0.300 ر.ع",
         desc_ar:"مشروب غازي منعش بنكهة الحمضيات، عبوة 300 مل.",
-        desc_en:"Refreshing citrus-flavored soft drink (300ml).", tags:[], spicy:false },
+        desc_en:"Refreshing citrus-flavored soft drink (300ml).",
+        image:"",
+        tags:[], spicy:false },
 
       { id:"d4", cat:"drinks", ar:"دايت كينزا ليمون", en:"Kinza Lemon Zero Sugar (300ml)", price:"0.300 ر.ع",
         desc_ar:"مشروب كينزا دايت منعش بنكهة الليمون المنعشة، 300 مل.",
-        desc_en:"Zero sugar lemon soft drink (300ml).", tags:["بدون سكر"], spicy:false },
+        desc_en:"Zero sugar lemon soft drink (300ml).",
+        image:"",
+        tags:["بدون سكر"], spicy:false },
 
       { id:"d5", cat:"drinks", ar:"دايت كينزا كولا", en:"Kinza Cola Zero Sugar (300ml)", price:"0.300 ر.ع",
         desc_ar:"مشروب كينزا كولا دايت منعش، خالٍ من السكر، 300 مل.",
-        desc_en:"Zero sugar cola soft drink (300ml).", tags:["بدون سكر"], spicy:false },
+        desc_en:"Zero sugar cola soft drink (300ml).",
+        image:"",
+        tags:["بدون سكر"], spicy:false },
 
       { id:"d6", cat:"drinks", ar:"كينزا كولا", en:"Kinza Cola (300ml)", price:"0.300 ر.ع",
         desc_ar:"مشروب كولا غازي منعش بحجم 300 مل.",
-        desc_en:"Refreshing cola soft drink (300ml).", tags:[], spicy:false },
+        desc_en:"Refreshing cola soft drink (300ml).",
+        image:"",
+        tags:[], spicy:false },
 
       { id:"s1", cat:"suhoor", ar:"رز قبولي خاص مع مشاكيك", en:"Kabuli Rice with Mashakeek", price:"1.700 ر.ع",
         desc_ar:"أرز قبولي تقليدي مطبوخ بالسمن، يُقدّم مع خمس أسياخ مشاكيك لحم بقري مشوي على الفحم مع صوصات.",
-        desc_en:"Traditional kabuli rice cooked with ghee, served with 5 beef mashakeek skewers grilled on charcoal with sauces.", tags:["⭐ وجبة"], spicy:false },
+        desc_en:"Traditional kabuli rice cooked with ghee, served with 5 beef mashakeek skewers grilled on charcoal with sauces.",
+        image:"",
+        tags:["⭐ وجبة"], spicy:false },
     ];
 
     const chips = document.getElementById("chips");
@@ -447,6 +486,10 @@
     const sheetBody = document.getElementById("sheetBody");
 
     let activeCat = CATEGORIES[0].key;
+
+    function hasImage(it){
+      return typeof it.image === "string" && it.image.trim().length > 0;
+    }
 
     function renderChips(){
       chips.innerHTML = "";
@@ -499,6 +542,21 @@
           card.appendChild(badge);
         }
 
+        // NEW: optional image block
+        if(hasImage(it)){
+          const imgWrap = document.createElement("div");
+          imgWrap.className = "imgWrap";
+
+          const img = document.createElement("img");
+          img.src = it.image;
+          img.alt = `${it.ar} - ${it.en}`;
+          img.loading = "lazy";
+          img.onerror = () => { imgWrap.remove(); };
+
+          imgWrap.appendChild(img);
+          card.appendChild(imgWrap);
+        }
+
         const title = document.createElement("div");
         title.className = "title";
 
@@ -525,7 +583,12 @@
     }
 
     function openModal(it){
+      const imgHtml = hasImage(it)
+        ? `<div class="modalImg"><img src="${it.image}" alt="${it.ar} - ${it.en}" onerror="this.closest('.modalImg').remove()"></div>`
+        : "";
+
       sheetBody.innerHTML = `
+        ${imgHtml}
         <div class="big">${it.ar}</div>
         <div class="en">${it.en}</div>
         <div class="p">${it.desc_ar}</div>
@@ -537,8 +600,8 @@
         </div>
 
         <div class="backRow">
-  <button class="btn" style="cursor:pointer" onclick="document.getElementById('modal').classList.remove('open')">رجوع</button>
-</div>
+          <button class="btn" style="cursor:pointer" onclick="document.getElementById('modal').classList.remove('open')">رجوع</button>
+        </div>
       `;
       modal.classList.add("open");
     }
