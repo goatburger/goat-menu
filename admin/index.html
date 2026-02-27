@@ -2,772 +2,811 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>لوحة تحكم GOAT Menu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GOAT Menu – Admin</title>
 
   <style>
     :root{
-      --bg:#0b0b0b;
-      --panel:#111;
-      --card:#121212;
+      --bg:#070707;
+      --card:#0f0f10;
       --line:rgba(255,255,255,.10);
-      --muted:#b9b9b9;
-      --fg:#f2f2f2;
+      --fg:#f5f5f5;
+      --muted:#bdbdbd;
       --gold:#d6b45a;
-      --danger:#ff4d4d;
-      --ok:#19c37d;
-      --radius:16px;
-      --shadow:0 18px 50px rgba(0,0,0,.45);
-      --max:1100px;
-      --btnh:52px;
+      --radius:18px;
+      --shadow:0 22px 60px rgba(0,0,0,.45);
     }
     *{box-sizing:border-box}
     body{
-      margin:0;
-      font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-      background: radial-gradient(900px 500px at 70% 0%, rgba(214,180,90,.12), transparent 55%),
-                  radial-gradient(700px 500px at 20% 20%, rgba(255,255,255,.06), transparent 55%),
-                  var(--bg);
-      color:var(--fg);
+      margin:0; color:var(--fg); background:
+        radial-gradient(900px 600px at 30% 10%, rgba(214,180,90,.12), transparent 60%),
+        radial-gradient(900px 600px at 90% 20%, rgba(255,255,255,.06), transparent 60%),
+        var(--bg);
+      font-family: system-ui, -apple-system, "Segoe UI", Arial;
     }
-    a{color:inherit}
-    .wrap{max-width:var(--max); margin:0 auto; padding:18px;}
+    .wrap{max-width:980px;margin:24px auto;padding:0 14px}
     .top{
-      display:flex; gap:12px; align-items:center; justify-content:space-between;
-      padding:16px 18px; border:1px solid var(--line); border-radius:var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      box-shadow: var(--shadow);
-      position:sticky; top:10px; z-index:10;
-      backdrop-filter: blur(8px);
-    }
-    .brand{display:flex; gap:12px; align-items:center;}
-    .logo{
-      width:44px; height:44px; border-radius:12px;
+      background:rgba(255,255,255,.03);
       border:1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      display:grid; place-items:center;
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:16px;
+      display:flex; gap:14px; align-items:center; justify-content:space-between;
+    }
+    .brand{display:flex; gap:12px; align-items:center}
+    .brand .logo{
+      width:44px;height:44px;border-radius:14px;
+      background:rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      display:grid;place-items:center;
       overflow:hidden;
     }
-    .logo img{width:100%; height:100%; object-fit:cover}
-    .h1{font-size:18px; font-weight:900; line-height:1.1}
-    .sub{font-size:12px; color:var(--muted)}
-    .right{display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
-    .pill{
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      padding:8px 10px;
-      border-radius:999px;
-      font-size:12px;
-      color:var(--muted);
-      max-width: 60vw;
-      overflow:hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
+    .brand h1{margin:0;font-size:20px;line-height:1.1}
+    .brand p{margin:2px 0 0;color:var(--muted);font-size:13px}
+    .pill{display:inline-flex;gap:8px;align-items:center}
     .btn{
-      height:var(--btnh);
-      padding:0 16px;
-      border-radius:14px;
       border:1px solid var(--line);
-      background: rgba(255,255,255,.04);
+      background:rgba(255,255,255,.04);
       color:var(--fg);
-      font-weight:800;
+      padding:12px 14px;
+      border-radius:16px;
       cursor:pointer;
-      display:inline-flex; align-items:center; justify-content:center;
-      gap:10px;
-      transition:.15s;
+      font-weight:700;
+      transition:.15s transform,.15s background;
+      user-select:none;
     }
-    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.06)}
-    .btn.gold{background: var(--gold); border-color: rgba(0,0,0,.25); color:#111}
-    .btn.danger{background: rgba(255,77,77,.12); border-color: rgba(255,77,77,.35); color:#ffd0d0}
-    .btn.ghost{background: transparent}
-    .grid{
-      display:grid;
-      grid-template-columns: 260px 1fr;
-      gap:14px;
-      margin-top:14px;
-    }
-    @media (max-width: 900px){
-      .grid{grid-template-columns: 1fr}
-    }
-    .side, .main{
-      border:1px solid var(--line);
-      border-radius: var(--radius);
-      background: rgba(255,255,255,.03);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .side{padding:12px;}
-    .navbtn{
-      width:100%;
-      height:52px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      color:var(--fg);
-      font-weight:900;
-      cursor:pointer;
-      margin-bottom:10px;
-      display:flex; align-items:center; justify-content:center;
-    }
-    .navbtn.active{background: var(--gold); color:#111; border-color: rgba(0,0,0,.25)}
+    .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.06)}
+    .btn.gold{background:linear-gradient(180deg, rgba(214,180,90,.95), rgba(214,180,90,.78)); border-color:rgba(214,180,90,.35); color:#121212}
+    .btn.small{padding:10px 12px;border-radius:14px;font-size:14px}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:flex-start}
+    .status{color:var(--muted);font-size:13px}
     .card{
+      margin-top:14px;
+      background:rgba(255,255,255,.03);
       border:1px solid var(--line);
-      border-radius: var(--radius);
-      background: rgba(0,0,0,.25);
-      padding:14px;
-      margin:14px;
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:16px;
     }
-    .title{font-size:22px; font-weight:900; margin:0 0 4px;}
-    .hint{color:var(--muted); font-size:13px; margin:0}
-    .row{display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:12px;}
-    @media (max-width: 700px){ .row{grid-template-columns:1fr} }
-    .field{
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      border-radius:14px;
-      padding:12px;
-    }
-    .field label{display:block; font-size:12px; color:var(--muted); margin-bottom:8px;}
+    .tabs{display:flex;gap:10px;flex-wrap:wrap}
+    .tab{flex:1;min-width:160px}
+    .title{margin:0 0 6px;font-size:22px}
+    .sub{margin:0 0 14px;color:var(--muted);font-size:14px}
+    .grid{display:grid;gap:10px}
+    @media (min-width:760px){ .grid.cols2{grid-template-columns:1fr 1fr} }
+
+    label{font-size:13px;color:var(--muted)}
     input, textarea, select{
       width:100%;
-      background: transparent;
-      border:0;
-      outline: none;
-      color: var(--fg);
-      font-size:15px;
-    }
-    textarea{min-height:86px; resize:vertical}
-    .inline{display:flex; gap:10px; align-items:center;}
-    .small{font-size:12px; color:var(--muted)}
-    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;}
-    .hr{height:1px; background: var(--line); margin:14px 0;}
-    .msg{margin-top:10px; font-weight:900; color: var(--ok);}
-    .err{color:#ff9a9a}
-    .table{
-      margin-top:12px;
+      padding:12px 12px;
+      border-radius:16px;
       border:1px solid var(--line);
-      border-radius: 14px;
-      overflow:hidden;
+      background:rgba(0,0,0,.35);
+      color:var(--fg);
+      outline:none;
     }
-    table{width:100%; border-collapse: collapse; font-size:14px;}
-    th, td{padding:12px 10px; border-bottom:1px solid rgba(255,255,255,.08); vertical-align: middle;}
-    th{text-align:right; font-size:12px; color:var(--muted); background: rgba(255,255,255,.03);}
-    tr:hover td{background: rgba(255,255,255,.02)}
-    .tag{
-      display:inline-block;
-      padding:5px 10px;
-      border-radius:999px;
+    textarea{min-height:110px;resize:vertical}
+    .hint{font-size:12px;color:var(--muted);margin-top:6px}
+    .hr{height:1px;background:var(--line);margin:14px 0}
+
+    .list{display:grid;gap:10px}
+    .item{
       border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      font-size:12px;
-      color:var(--muted);
-      margin:2px 0;
+      background:rgba(0,0,0,.25);
+      border-radius:18px;
+      padding:12px;
+      display:grid;
+      gap:10px;
     }
-    .thumb{
-      width:46px; height:46px; border-radius:12px;
+    @media (min-width:760px){ .item{grid-template-columns: 1fr auto; align-items:center} }
+    .item h3{margin:0;font-size:16px}
+    .item .meta{color:var(--muted);font-size:13px;margin-top:4px}
+    .badge{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:6px 10px;border-radius:999px;
       border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      overflow:hidden;
-      display:grid; place-items:center;
+      background:rgba(255,255,255,.04);
+      font-size:13px;color:var(--fg)
     }
-    .thumb img{width:100%; height:100%; object-fit:cover}
-    .k{display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
-    .mono{font-family: ui-monospace, Menlo, Monaco, Consolas, "Courier New", monospace;}
+    .badge.off{opacity:.6}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .msg{margin-top:10px;color:var(--muted);font-size:13px}
+    .msg.ok{color:#8cffb0}
+    .msg.err{color:#ff8c8c}
+
+    /* Modal */
+    .modal-back{
+      position:fixed; inset:0;
+      background:rgba(0,0,0,.55);
+      display:none; align-items:center; justify-content:center;
+      padding:16px;
+      z-index:9999;
+    }
+    .modal{
+      width:min(520px, 100%);
+      background:rgba(20,20,20,.92);
+      border:1px solid var(--line);
+      border-radius:22px;
+      box-shadow:0 30px 90px rgba(0,0,0,.6);
+      padding:16px;
+    }
+    .modal .head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .modal .head h2{margin:0;font-size:18px}
+    .x{font-size:18px;line-height:1;border:none;background:transparent;color:var(--fg);cursor:pointer}
+    .hidden{display:none!important}
+    .previewImg{width:44px;height:44px;border-radius:14px;border:1px solid var(--line);object-fit:cover;background:rgba(255,255,255,.04)}
   </style>
+
+  <!-- Supabase JS (non-module) - أفضل توافق للآيفون -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
   <div class="wrap">
     <div class="top">
       <div class="brand">
-        <div class="logo" id="topLogoBox"><span class="mono">🐐</span></div>
+        <div class="logo"><img id="brandLogo" class="previewImg" alt="" /></div>
         <div>
-          <div class="h1">لوحة تحكم GOAT Menu</div>
-          <div class="sub">إضافة / تعديل / حذف / إخفاء + إعدادات الشكل</div>
+          <h1>لوحة تحكم GOAT Menu</h1>
+          <p id="topHint">إضافة / تعديل / حذف / إخفاء + إعدادات الشكل</p>
         </div>
       </div>
-      <div class="right">
-        <div class="pill" id="userPill">غير مسجل</div>
+
+      <div class="row">
+        <span class="status" id="authStatus">غير مسجل</span>
         <button class="btn gold" id="btnLogin">تسجيل الدخول</button>
-        <button class="btn danger" id="btnLogout" style="display:none">خروج</button>
+        <button class="btn small hidden" id="btnLogout">خروج</button>
       </div>
     </div>
 
-    <div class="grid">
-      <div class="side">
-        <button class="navbtn active" data-tab="items">🍔 الوجبات</button>
-        <button class="navbtn" data-tab="style">🎨 إعدادات الشكل</button>
-
-        <div class="card" style="margin:10px 0 0;">
-          <div class="small">
-            رفع الصور يتم إلى Storage bucket اسمها <span class="mono">menu-images</span>.
-          </div>
-        </div>
+    <div class="card">
+      <div class="tabs">
+        <button class="btn gold tab" id="tabItems">🍔 الوجبات</button>
+        <button class="btn tab" id="tabStyle">🎨 إعدادات الشكل</button>
       </div>
 
-      <div class="main">
+      <div class="hr"></div>
 
-        <!-- LOGIN -->
-        <div class="card" id="loginCard" style="display:none">
-          <div class="title">تسجيل الدخول</div>
-          <p class="hint">استخدم نفس حساب Supabase Auth.</p>
+      <!-- ITEMS -->
+      <section id="secItems">
+        <h2 class="title">الوجبات</h2>
+        <p class="sub">إضافة / تعديل / حذف / إخفاء + رفع صورة من الهاتف مباشرة.</p>
 
-          <div class="row">
-            <div class="field">
-              <label>البريد</label>
-              <input id="loginEmail" type="email" placeholder="name@email.com" />
-            </div>
-            <div class="field">
-              <label>كلمة المرور</label>
-              <input id="loginPass" type="password" placeholder="••••••••" />
-            </div>
+        <div class="grid cols2">
+          <div>
+            <label>اسم الوجبة (عربي)*</label>
+            <input id="nameAr" placeholder="مثال: جوت برجر" />
+          </div>
+          <div>
+            <label>Name (EN) (اختياري)</label>
+            <input id="nameEn" placeholder="Goat Burger" />
           </div>
 
-          <div class="actions">
-            <button class="btn gold" id="doLogin">دخول</button>
-            <button class="btn ghost" id="closeLogin">إلغاء</button>
+          <div>
+            <label>السعر (مثال 1.500)*</label>
+            <input id="price" inputmode="decimal" placeholder="1.500" />
           </div>
 
-          <div class="msg err" id="loginMsg" style="display:none"></div>
-        </div>
-
-        <!-- ITEMS -->
-        <div class="card" id="tab-items">
-          <div class="title">الوجبات</div>
-          <p class="hint">إضافة / تعديل / حذف / إخفاء + رفع صورة من الهاتف مباشرة.</p>
-
-          <div class="row">
-            <div class="field">
-              <label>اسم الوجبة (عربي) *</label>
-              <input id="name_ar" placeholder="مثال: جوت برجر" />
-            </div>
-            <div class="field">
-              <label>Name (EN) اختياري</label>
-              <input id="name_en" placeholder="Goat Burger" />
-            </div>
+          <div>
+            <label>القسم (اختياري)</label>
+            <input id="category" placeholder="Burgers / Drinks ..." />
           </div>
 
-          <div class="row">
-            <div class="field">
-              <label>السعر (مثال 1.500) *</label>
-              <input id="price" inputmode="decimal" placeholder="1.500" />
-            </div>
-            <div class="field">
-              <label>القسم (اختياري)</label>
-              <input id="category" placeholder="برجر / مشروبات..." />
-            </div>
+          <div>
+            <label>تاج (اختياري)</label>
+            <input id="tag" placeholder="New / Best Seller ..." />
           </div>
 
-          <div class="row">
-            <div class="field">
-              <label>الوصف عربي (اختياري)</label>
-              <textarea id="desc_ar" placeholder="مثال: شريحتين لحم..."></textarea>
-            </div>
-            <div class="field">
-              <label>Description EN (optional)</label>
-              <textarea id="desc_en" placeholder="Two beef patties..."></textarea>
-            </div>
+          <div>
+            <label>الترتيب (اختياري)</label>
+            <input id="sort" inputmode="numeric" placeholder="0" />
           </div>
 
-          <div class="row">
-            <div class="field">
-              <label>الحالة</label>
-              <select id="is_active">
-                <option value="true">ظاهر</option>
-                <option value="false">مخفي</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>الترتيب</label>
-              <input id="sort_order" inputmode="numeric" placeholder="0" />
-            </div>
+          <div>
+            <label>الوصف عربي (اختياري)</label>
+            <textarea id="descAr" placeholder="وصف مختصر..."></textarea>
+          </div>
+          <div>
+            <label>Description EN (optional)</label>
+            <textarea id="descEn" placeholder="Short description..."></textarea>
           </div>
 
-          <div class="row">
-            <div class="field">
-              <label>Tags (اختياري) — بفواصل</label>
-              <input id="tags" placeholder="جديد, سبايسي, بيف" />
-            </div>
-
-            <div class="field">
-              <label>صورة الوجبة</label>
-              <div class="inline">
-                <input id="item_file" type="file" accept="image/*" />
-              </div>
-              <div class="small">أو حط رابط صورة</div>
-              <input id="image_url" placeholder="https://..." />
-            </div>
+          <div>
+            <label>الصورة (من الهاتف)</label>
+            <input id="itemImageFile" type="file" accept="image/*" />
+            <div class="hint">إذا رفعت صورة هنا، بتنرفع تلقائيًا إلى Storage bucket: <b>menu-images</b></div>
           </div>
 
-          <div class="actions">
-            <button class="btn gold" id="saveItem">حفظ</button>
-            <button class="btn" id="clearForm">تفريغ</button>
-            <button class="btn" id="refreshList">تحديث</button>
+          <div>
+            <label>رابط صورة (اختياري بدل الرفع)</label>
+            <input id="imageUrl" placeholder="https://..." />
           </div>
 
-          <div class="msg" id="itemMsg" style="display:none"></div>
+          <div>
+            <label>الحالة</label>
+            <select id="isHidden">
+              <option value="false">ظاهر</option>
+              <option value="true">مخفي</option>
+            </select>
+          </div>
 
-          <div class="hr"></div>
-
-          <div class="table">
-            <table>
-              <thead>
-                <tr>
-                  <th>صورة</th>
-                  <th>الاسم</th>
-                  <th>السعر</th>
-                  <th>قسم</th>
-                  <th>الحالة</th>
-                  <th>ترتيب</th>
-                  <th>إجراءات</th>
-                </tr>
-              </thead>
-              <tbody id="itemsTbody"></tbody>
-            </table>
+          <div>
+            <label>ID للتعديل (اختياري)</label>
+            <input id="editId" placeholder="إذا تبي تعدّل وجبة موجودة: الصق ID هنا" />
           </div>
         </div>
 
-        <!-- STYLE -->
-        <div class="card" id="tab-style" style="display:none">
-          <div class="title">إعدادات الشكل</div>
-          <p class="hint">تغيير لوجو/خلفية/لون زر بسهولة.</p>
-
-          <div class="row">
-            <div class="field">
-              <label>عنوان المينيو</label>
-              <input id="menu_title" placeholder="GOAT Menu" />
-            </div>
-            <div class="field">
-              <label>لون الزر الأساسي</label>
-              <input id="primary_color" placeholder="#d6b45a" />
-              <div class="small">اكتبها هكذا: #d6b45a</div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="field">
-              <label>رابط اللوجو (URL)</label>
-              <input id="logo_url" placeholder="https://..." />
-              <div class="small">أو ارفع اللوجو مباشرة</div>
-              <input id="logo_file" type="file" accept="image/*" />
-            </div>
-
-            <div class="field">
-              <label>الخلفية (اختياري)</label>
-              <input id="bg_url" placeholder="رابط صورة خلفية" />
-              <div class="small">أو ارفع الخلفية مباشرة</div>
-              <input id="bg_file" type="file" accept="image/*" />
-            </div>
-          </div>
-
-          <div class="actions">
-            <button class="btn gold" id="saveSettings">حفظ الإعدادات</button>
-            <button class="btn" id="loadSettings">تحميل الإعدادات</button>
-          </div>
-
-          <div class="msg" id="setMsg" style="display:none"></div>
+        <div class="row" style="margin-top:12px">
+          <button class="btn gold" id="btnSaveItem">حفظ</button>
+          <button class="btn" id="btnClear">تفريغ</button>
+          <button class="btn" id="btnReload">تحديث القائمة</button>
         </div>
 
-      </div>
+        <div id="itemMsg" class="msg"></div>
+
+        <div class="hr"></div>
+
+        <h3 style="margin:0 0 8px">قائمة الوجبات</h3>
+        <div id="itemsList" class="list"></div>
+      </section>
+
+      <!-- STYLE -->
+      <section id="secStyle" class="hidden">
+        <h2 class="title">إعدادات الشكل</h2>
+        <p class="sub">تغيير اسم الصفحة + لون الزر + خلفية + شعار (رفع من الهاتف).</p>
+
+        <div class="grid cols2">
+          <div>
+            <label>عنوان القائمة (اسم يظهر بالمينيو)</label>
+            <input id="brandTitle" placeholder="GOAT Menu" />
+          </div>
+
+          <div>
+            <label>لون الزر (Hex)</label>
+            <input id="brandColor" placeholder="#d6b45a" />
+          </div>
+
+          <div>
+            <label>رفع شعار (من الهاتف)</label>
+            <input id="logoFile" type="file" accept="image/*" />
+            <div class="hint">يتخزن في: <b>menu-images/branding/</b></div>
+          </div>
+
+          <div>
+            <label>رفع خلفية (من الهاتف)</label>
+            <input id="bgFile" type="file" accept="image/*" />
+            <div class="hint">يتخزن في: <b>menu-images/branding/</b></div>
+          </div>
+
+          <div>
+            <label>رابط الشعار (URL) (اختياري)</label>
+            <input id="logoUrl" placeholder="https://..." />
+          </div>
+
+          <div>
+            <label>رابط الخلفية (URL) (اختياري)</label>
+            <input id="bgUrl" placeholder="https://..." />
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:12px">
+          <button class="btn gold" id="btnSaveStyle">حفظ الإعدادات</button>
+          <button class="btn" id="btnLoadStyle">تحميل الإعدادات</button>
+        </div>
+
+        <div id="styleMsg" class="msg"></div>
+
+        <div class="hr"></div>
+        <div class="hint">
+          بعد ما تحفظ، لازم صفحة <b>menu.html</b> تكون تقرأ الإعدادات من جدول <b>app_settings</b>.
+          إذا تبي أربطها لك بعد ما نستقر هنا.
+        </div>
+      </section>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- LOGIN MODAL -->
+  <div id="modalBack" class="modal-back">
+    <div class="modal">
+      <div class="head">
+        <h2>تسجيل الدخول</h2>
+        <button class="x" id="btnCloseModal">✕</button>
+      </div>
+      <div class="hr"></div>
 
-  <script>
-    /************ CONFIG ************/
-    const SUPABASE_URL = "https://dcenkkyxsklzhcnjycoc.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_QnMtHgIxfr_CwM89PBKT7g_Li1VqRjp";
+      <div class="grid">
+        <div>
+          <label>Email</label>
+          <input id="loginEmail" type="email" placeholder="name@email.com" />
+        </div>
+        <div>
+          <label>Password</label>
+          <input id="loginPass" type="password" placeholder="••••••••" />
+        </div>
+      </div>
 
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      <div class="row" style="margin-top:12px;justify-content:flex-start">
+        <button class="btn gold" id="btnDoLogin">دخول</button>
+        <button class="btn" id="btnCancelLogin">إلغاء</button>
+      </div>
 
-    /************ ELEMENTS ************/
-    const userPill = document.getElementById("userPill");
-    const btnLogin = document.getElementById("btnLogin");
-    const btnLogout = document.getElementById("btnLogout");
-    const loginCard = document.getElementById("loginCard");
-    const loginEmail = document.getElementById("loginEmail");
-    const loginPass = document.getElementById("loginPass");
-    const doLogin = document.getElementById("doLogin");
-    const closeLogin = document.getElementById("closeLogin");
-    const loginMsg = document.getElementById("loginMsg");
-    const topLogoBox = document.getElementById("topLogoBox");
+      <div id="loginMsg" class="msg"></div>
+    </div>
+  </div>
 
-    const navBtns = Array.from(document.querySelectorAll(".navbtn"));
-    const tabItems = document.getElementById("tab-items");
-    const tabStyle = document.getElementById("tab-style");
+<script>
+  // ==== ضع بيانات مشروعك هنا ====
+  const SUPABASE_URL = "https://dcenkkyxsklzhcnjycoc.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_QnMtHgIxfr_CwM89PBKT7g_Li1VqRjp";
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const nameAr = document.getElementById("name_ar");
-    const nameEn = document.getElementById("name_en");
-    const price = document.getElementById("price");
-    const category = document.getElementById("category");
-    const descAr = document.getElementById("desc_ar");
-    const descEn = document.getElementById("desc_en");
-    const isActive = document.getElementById("is_active");
-    const sortOrder = document.getElementById("sort_order");
-    const tags = document.getElementById("tags");
-    const imageUrl = document.getElementById("image_url");
-    const itemFile = document.getElementById("item_file");
-    const saveItem = document.getElementById("saveItem");
-    const clearForm = document.getElementById("clearForm");
-    const itemMsg = document.getElementById("itemMsg");
-    const refreshList = document.getElementById("refreshList");
-    const itemsTbody = document.getElementById("itemsTbody");
+  // ==== أسماء الجداول/البكت ====
+  const BUCKET = "menu-images";
+  const T_ITEMS = "menu_items";
+  const T_SETTINGS = "app_settings"; // صف واحد id=1
 
-    let editingId = null;
+  // UI refs
+  const tabItems = document.getElementById("tabItems");
+  const tabStyle = document.getElementById("tabStyle");
+  const secItems = document.getElementById("secItems");
+  const secStyle = document.getElementById("secStyle");
 
-    const menuTitle = document.getElementById("menu_title");
-    const primaryColor = document.getElementById("primary_color");
-    const logoUrl = document.getElementById("logo_url");
-    const bgUrl = document.getElementById("bg_url");
-    const logoFile = document.getElementById("logo_file");
-    const bgFile = document.getElementById("bg_file");
-    const saveSettingsBtn = document.getElementById("saveSettings");
-    const loadSettingsBtn = document.getElementById("loadSettings");
-    const setMsg = document.getElementById("setMsg");
+  const authStatus = document.getElementById("authStatus");
+  const btnLogin = document.getElementById("btnLogin");
+  const btnLogout = document.getElementById("btnLogout");
 
-    /************ HELPERS ************/
-    function showMsg(el, text, isError=false){
-      el.style.display = "block";
-      el.classList.toggle("err", !!isError);
-      el.textContent = text;
+  const modalBack = document.getElementById("modalBack");
+  const btnCloseModal = document.getElementById("btnCloseModal");
+  const btnCancelLogin = document.getElementById("btnCancelLogin");
+  const btnDoLogin = document.getElementById("btnDoLogin");
+  const loginEmail = document.getElementById("loginEmail");
+  const loginPass = document.getElementById("loginPass");
+  const loginMsg = document.getElementById("loginMsg");
+
+  const itemMsg = document.getElementById("itemMsg");
+  const styleMsg = document.getElementById("styleMsg");
+
+  const brandLogo = document.getElementById("brandLogo");
+
+  // Item inputs
+  const nameAr = document.getElementById("nameAr");
+  const nameEn = document.getElementById("nameEn");
+  const price = document.getElementById("price");
+  const category = document.getElementById("category");
+  const tag = document.getElementById("tag");
+  const sort = document.getElementById("sort");
+  const descAr = document.getElementById("descAr");
+  const descEn = document.getElementById("descEn");
+  const imageUrl = document.getElementById("imageUrl");
+  const isHidden = document.getElementById("isHidden");
+  const editId = document.getElementById("editId");
+  const itemImageFile = document.getElementById("itemImageFile");
+
+  const btnSaveItem = document.getElementById("btnSaveItem");
+  const btnClear = document.getElementById("btnClear");
+  const btnReload = document.getElementById("btnReload");
+  const itemsList = document.getElementById("itemsList");
+
+  // Style inputs
+  const brandTitle = document.getElementById("brandTitle");
+  const brandColor = document.getElementById("brandColor");
+  const logoFile = document.getElementById("logoFile");
+  const bgFile = document.getElementById("bgFile");
+  const logoUrl = document.getElementById("logoUrl");
+  const bgUrl = document.getElementById("bgUrl");
+  const btnSaveStyle = document.getElementById("btnSaveStyle");
+  const btnLoadStyle = document.getElementById("btnLoadStyle");
+
+  // Helpers
+  function msg(el, text, type){
+    el.className = "msg" + (type ? (" " + type) : "");
+    el.textContent = text || "";
+  }
+  function showModal(show){
+    modalBack.style.display = show ? "flex" : "none";
+    msg(loginMsg,"","");
+  }
+  function setTab(which){
+    if(which === "items"){
+      secItems.classList.remove("hidden");
+      secStyle.classList.add("hidden");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+      tabItems.classList.add("gold");
+      tabStyle.classList.remove("gold");
+    } else {
+      secStyle.classList.remove("hidden");
+      secItems.classList.add("hidden");
+      tabStyle.classList.add("gold");
+      tabItems.classList.remove("gold");
     }
-    function hideMsg(el){
-      el.style.display="none";
-      el.textContent="";
-      el.classList.remove("err");
-    }
-    function normalizeHex(v){
-      if(!v) return "";
-      v = v.trim();
-      if(!v) return "";
-      if(v[0] !== "#") v = "#"+v;
-      v = v.replace(/#+$/g,"");
-      if(!/^#[0-9a-fA-F]{6}$/.test(v)) return "";
-      return v.toLowerCase();
-    }
+  }
 
-    async function uploadToBucket(file, folder){
-      const ext = (file.name.split(".").pop() || "png").toLowerCase();
-      const path = `${folder}/${crypto.randomUUID()}.${ext}`;
+  // (تنظيف إضافي: خل نضمن ما في تكرار غريب بالأصناف)
+  function setTabClean(which){
+    tabItems.classList.remove("gold");
+    tabStyle.classList.remove("gold");
+    if(which === "items"){ tabItems.classList.add("gold"); secItems.classList.remove("hidden"); secStyle.classList.add("hidden"); }
+    else { tabStyle.classList.add("gold"); secStyle.classList.remove("hidden"); secItems.classList.add("hidden"); }
+  }
+  setTabClean("items");
 
-      const { error } = await supabase.storage
-        .from("menu-images")
-        .upload(path, file, { upsert:false, contentType: file.type });
+  tabItems.addEventListener("click", ()=> setTabClean("items"));
+  tabStyle.addEventListener("click", ()=> setTabClean("style"));
 
-      if(error) throw error;
+  btnLogin.addEventListener("click", ()=> showModal(true));
+  btnCloseModal.addEventListener("click", ()=> showModal(false));
+  btnCancelLogin.addEventListener("click", ()=> showModal(false));
+  modalBack.addEventListener("click", (e)=>{ if(e.target === modalBack) showModal(false); });
 
-      const { data } = supabase.storage.from("menu-images").getPublicUrl(path);
-      return data.publicUrl;
+  btnDoLogin.addEventListener("click", async ()=>{
+    msg(loginMsg,"جاري تسجيل الدخول...","");
+    const email = (loginEmail.value||"").trim();
+    const pass = loginPass.value||"";
+    if(!email || !pass){ msg(loginMsg,"اكتب الإيميل وكلمة المرور.","err"); return; }
+
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password: pass });
+    if(error){ msg(loginMsg, error.message || "فشل الدخول","err"); return; }
+    showModal(false);
+    await refreshAuthUI();
+    msg(itemMsg,"تم تسجيل الدخول ✅","ok");
+  });
+
+  btnLogout.addEventListener("click", async ()=>{
+    await supabaseClient.auth.signOut();
+    await refreshAuthUI();
+    msg(itemMsg,"تم تسجيل الخروج.","");
+  });
+
+  async function refreshAuthUI(){
+    const { data } = await supabaseClient.auth.getSession();
+    const sess = data.session;
+    if(sess){
+      authStatus.textContent = "مسجل: " + (sess.user?.email || "");
+      btnLogin.classList.add("hidden");
+      btnLogout.classList.remove("hidden");
+    }else{
+      authStatus.textContent = "غير مسجل";
+      btnLogin.classList.remove("hidden");
+      btnLogout.classList.add("hidden");
     }
+  }
 
-    async function uploadItemImageIfAny(){
-      const file = itemFile.files?.[0];
-      if(!file) return null;
-      return await uploadToBucket(file, "items");
-    }
-    async function uploadLogoIfAny(){
-      const file = logoFile.files?.[0];
-      if(!file) return null;
-      return await uploadToBucket(file, "branding");
-    }
-    async function uploadBgIfAny(){
-      const file = bgFile.files?.[0];
-      if(!file) return null;
-      return await uploadToBucket(file, "branding");
-    }
+  // Storage upload helper
+  async function uploadToBucket(file, folder){
+    if(!file) return null;
+    const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+    const safeName = `${folder}/${Date.now()}-${Math.random().toString(16).slice(2)}.${ext}`;
 
-    function setActiveTab(tab){
-      navBtns.forEach(b=>b.classList.toggle("active", b.dataset.tab === tab));
-      tabItems.style.display = (tab === "items") ? "block" : "none";
-      tabStyle.style.display = (tab === "style") ? "block" : "none";
-    }
-
-    /************ AUTH ************/
-    btnLogin.addEventListener("click", ()=>{
-      loginCard.style.display = "block";
-      hideMsg(loginMsg);
+    const { error: upErr } = await supabaseClient.storage.from(BUCKET).upload(safeName, file, {
+      cacheControl: "3600",
+      upsert: true,
+      contentType: file.type || "image/jpeg"
     });
-    closeLogin.addEventListener("click", ()=>{
-      loginCard.style.display = "none";
-      hideMsg(loginMsg);
-    });
+    if(upErr) throw upErr;
 
-    doLogin.addEventListener("click", async ()=>{
-      hideMsg(loginMsg);
-      const email = (loginEmail.value||"").trim();
-      const pass = (loginPass.value||"").trim();
-      if(!email || !pass){
-        showMsg(loginMsg, "اكتب البريد وكلمة المرور.", true);
-        return;
-      }
-      const { error } = await supabase.auth.signInWithPassword({ email, password: pass });
-      if(error){
-        showMsg(loginMsg, error.message, true);
-        return;
-      }
-      loginCard.style.display = "none";
-      await refreshSessionUI();
-      await loadItems();
-      await loadSettings();
-    });
+    const { data } = supabaseClient.storage.from(BUCKET).getPublicUrl(safeName);
+    return data?.publicUrl || null;
+  }
 
-    btnLogout.addEventListener("click", async ()=>{
-      await supabase.auth.signOut();
-      await refreshSessionUI();
-    });
+  function clearForm(){
+    editId.value = "";
+    nameAr.value = "";
+    nameEn.value = "";
+    price.value = "";
+    category.value = "";
+    tag.value = "";
+    sort.value = "";
+    descAr.value = "";
+    descEn.value = "";
+    imageUrl.value = "";
+    isHidden.value = "false";
+    itemImageFile.value = "";
+  }
+  btnClear.addEventListener("click", clearForm);
 
-    async function refreshSessionUI(){
-      const { data } = await supabase.auth.getUser();
-      const u = data?.user;
-      if(u){
-        userPill.textContent = `مسجل دخول: ${u.email}`;
-        btnLogin.style.display = "none";
-        btnLogout.style.display = "inline-flex";
-      }else{
-        userPill.textContent = "غير مسجل";
-        btnLogin.style.display = "inline-flex";
-        btnLogout.style.display = "none";
-      }
-    }
+  // Save item (insert or update)
+  btnSaveItem.addEventListener("click", async ()=>{
+    msg(itemMsg,"","");
+    const ar = nameAr.value.trim();
+    const pr = price.value.trim();
+    if(!ar || !pr){ msg(itemMsg,"اسم الوجبة والسعر مطلوبين.","err"); return; }
 
-    /************ NAV ************/
-    navBtns.forEach(b=> b.addEventListener("click", ()=> setActiveTab(b.dataset.tab)));
-
-    /************ ITEMS ************/
-    function clearItemForm(){
-      editingId = null;
-      nameAr.value = "";
-      nameEn.value = "";
-      price.value = "";
-      category.value = "";
-      descAr.value = "";
-      descEn.value = "";
-      isActive.value = "true";
-      sortOrder.value = "0";
-      tags.value = "";
-      imageUrl.value = "";
-      itemFile.value = "";
-      hideMsg(itemMsg);
-      saveItem.textContent = "حفظ";
-    }
-    clearForm.addEventListener("click", clearItemForm);
-    refreshList.addEventListener("click", loadItems);
-
-    saveItem.addEventListener("click", async ()=>{
-      hideMsg(itemMsg);
-
-      const ar = (nameAr.value||"").trim();
-      const pr = (price.value||"").trim();
-      if(!ar || !pr){
-        showMsg(itemMsg, "اسم عربي + سعر مطلوبين.", true);
-        return;
-      }
-
-      try{
-        if(itemFile?.files?.length){
-          const uploaded = await uploadItemImageIfAny();
-          if(uploaded) imageUrl.value = uploaded;
-          itemFile.value = "";
-        }
-      }catch(e){
-        showMsg(itemMsg, "خطأ رفع الصورة: " + (e.message||e), true);
-        return;
+    try{
+      // إذا فيه ملف صورة: ارفعه وخذ الرابط
+      let finalImageUrl = imageUrl.value.trim() || null;
+      if(itemImageFile.files && itemImageFile.files[0]){
+        finalImageUrl = await uploadToBucket(itemImageFile.files[0], "items");
       }
 
       const payload = {
         name_ar: ar,
-        name_en: (nameEn.value||"").trim() || null,
+        name_en: nameEn.value.trim() || null,
         price: Number(pr),
-        category: (category.value||"").trim() || null,
-        desc_ar: (descAr.value||"").trim() || null,
-        desc_en: (descEn.value||"").trim() || null,
-        is_active: (isActive.value === "true"),
-        sort_order: parseInt((sortOrder.value||"0"),10) || 0,
-        image_url: (imageUrl.value||"").trim() || null,
-        tags: (tags.value||"").split(",").map(s=>s.trim()).filter(Boolean).join(",") || null,
+        category: category.value.trim() || null,
+        tag: tag.value.trim() || null,
+        sort: sort.value ? Number(sort.value) : 0,
+        desc_ar: descAr.value.trim() || null,
+        desc_en: descEn.value.trim() || null,
+        image_url: finalImageUrl,
+        is_hidden: (isHidden.value === "true")
       };
 
-      const res = editingId
-        ? await supabase.from("menu_items").update(payload).eq("id", editingId)
-        : await supabase.from("menu_items").insert(payload);
+      const id = editId.value.trim();
+      msg(itemMsg, id ? "جاري التعديل..." : "جاري الإضافة...", "");
 
-      if(res.error){
-        showMsg(itemMsg, res.error.message, true);
-        return;
+      let res;
+      if(id){
+        res = await supabaseClient.from(T_ITEMS).update(payload).eq("id", id).select().single();
+      }else{
+        res = await supabaseClient.from(T_ITEMS).insert(payload).select().single();
       }
 
-      showMsg(itemMsg, "✅ تم الحفظ بنجاح");
-      clearItemForm();
+      if(res.error) throw res.error;
+
+      msg(itemMsg, "تم الحفظ بنجاح ✅", "ok");
+      clearForm();
       await loadItems();
-    });
+    }catch(e){
+      msg(itemMsg, (e && e.message) ? e.message : "حدث خطأ", "err");
+    }
+  });
 
-    async function loadItems(){
-      itemsTbody.innerHTML = "";
-      const { data, error } = await supabase
-        .from("menu_items")
-        .select("*")
-        .order("sort_order", { ascending:true })
-        .order("created_at", { ascending:false });
+  btnReload.addEventListener("click", loadItems);
 
-      if(error){
-        itemsTbody.innerHTML = `<tr><td colspan="7" class="err">خطأ: ${error.message}</td></tr>`;
-        return;
+  async function loadItems(){
+    itemsList.innerHTML = "";
+    const { data, error } = await supabaseClient
+      .from(T_ITEMS)
+      .select("*")
+      .order("sort", { ascending:true })
+      .order("created_at", { ascending:false });
+
+    if(error){
+      itemsList.innerHTML = `<div class="msg err">${error.message}</div>`;
+      return;
+    }
+    if(!data || data.length === 0){
+      itemsList.innerHTML = `<div class="msg">ما فيه وجبات.</div>`;
+      return;
+    }
+
+    for(const it of data){
+      const div = document.createElement("div");
+      div.className = "item";
+
+      const left = document.createElement("div");
+      const title = document.createElement("h3");
+      title.textContent = it.name_ar + (it.name_en ? ` — ${it.name_en}` : "");
+      const meta = document.createElement("div");
+      meta.className = "meta";
+      meta.textContent = `السعر: ${it.price} | القسم: ${it.category||"-"} | تاج: ${it.tag||"-"} | ترتيب: ${it.sort||0}`;
+
+      const badges = document.createElement("div");
+      badges.style.marginTop = "8px";
+      const b1 = document.createElement("span");
+      b1.className = "badge" + (it.is_hidden ? " off":"");
+      b1.textContent = it.is_hidden ? "مخفي" : "ظاهر";
+      const b2 = document.createElement("span");
+      b2.className = "badge";
+      b2.textContent = "ID: " + it.id;
+      badges.appendChild(b1); badges.appendChild(b2);
+
+      left.appendChild(title);
+      left.appendChild(meta);
+      left.appendChild(badges);
+
+      const right = document.createElement("div");
+      right.className = "actions";
+
+      const btnEdit = document.createElement("button");
+      btnEdit.className = "btn small";
+      btnEdit.textContent = "تعديل";
+      btnEdit.onclick = ()=>{
+        editId.value = it.id;
+        nameAr.value = it.name_ar || "";
+        nameEn.value = it.name_en || "";
+        price.value = (it.price ?? "").toString();
+        category.value = it.category || "";
+        tag.value = it.tag || "";
+        sort.value = (it.sort ?? 0).toString();
+        descAr.value = it.desc_ar || "";
+        descEn.value = it.desc_en || "";
+        imageUrl.value = it.image_url || "";
+        isHidden.value = it.is_hidden ? "true":"false";
+        window.scrollTo({ top: 0, behavior:"smooth" });
+        msg(itemMsg, "تم تحميل البيانات للتعديل ✍️", "");
+      };
+
+      const btnToggle = document.createElement("button");
+      btnToggle.className = "btn small";
+      btnToggle.textContent = it.is_hidden ? "إظهار" : "إخفاء";
+      btnToggle.onclick = async ()=>{
+        const { error } = await supabaseClient.from(T_ITEMS).update({ is_hidden: !it.is_hidden }).eq("id", it.id);
+        if(error) msg(itemMsg, error.message, "err");
+        else { msg(itemMsg, "تم تحديث الحالة ✅", "ok"); await loadItems(); }
+      };
+
+      const btnDel = document.createElement("button");
+      btnDel.className = "btn small";
+      btnDel.textContent = "حذف";
+      btnDel.onclick = async ()=>{
+        if(!confirm("متأكد تحذف الوجبة؟")) return;
+        const { error } = await supabaseClient.from(T_ITEMS).delete().eq("id", it.id);
+        if(error) msg(itemMsg, error.message, "err");
+        else { msg(itemMsg, "تم الحذف ✅", "ok"); await loadItems(); }
+      };
+
+      right.appendChild(btnEdit);
+      right.appendChild(btnToggle);
+      right.appendChild(btnDel);
+
+      div.appendChild(left);
+      div.appendChild(right);
+      itemsList.appendChild(div);
+    }
+  }
+
+  // SETTINGS
+  btnLoadStyle.addEventListener("click", loadSettings);
+  btnSaveStyle.addEventListener("click", saveSettings);
+
+  async function loadSettings(){
+    msg(styleMsg,"جاري التحميل...","");
+    const { data, error } = await supabaseClient.from(T_SETTINGS).select("*").eq("id", 1).maybeSingle();
+    if(error){ msg(styleMsg, error.message, "err"); return; }
+
+    const s = data || {};
+    brandTitle.value = s.title || "GOAT Menu";
+    brandColor.value = s.accent_color || "#d6b45a";
+    logoUrl.value = s.logo_url || "";
+    bgUrl.value = s.bg_url || "";
+
+    if(s.logo_url) brandLogo.src = s.logo_url;
+
+    msg(styleMsg, "تم تحميل الإعدادات ✅", "ok");
+  }
+
+  async function saveSettings(){
+    msg(styleMsg,"جاري الحفظ...","");
+    try{
+      let finalLogo = logoUrl.value.trim() || null;
+      let finalBg = bgUrl.value.trim() || null;
+
+      if(logoFile.files && logoFile.files[0]){
+        finalLogo = await uploadToBucket(logoFile.files[0], "branding");
       }
-      if(!data || !data.length){
-        itemsTbody.innerHTML = `<tr><td colspan="7" class="small">لا توجد وجبات.</td></tr>`;
-        return;
-      }
-
-      for(const it of data){
-        const img = it.image_url ? `<img src="${it.image_url}" alt="">` : `<span class="mono">?</span>`;
-        const active = it.is_active ? `<span class="tag">ظاهر</span>` : `<span class="tag">مخفي</span>`;
-        const cat = it.category ? `<span class="tag">${it.category}</span>` : `<span class="tag">—</span>`;
-        const nm = `<div style="font-weight:900">${it.name_ar}</div><div class="small">${it.name_en||""}</div>`;
-        const pr = `<div class="mono">${Number(it.price).toFixed(3)}</div>`;
-        const so = `<div class="mono">${it.sort_order ?? 0}</div>`;
-
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td><div class="thumb">${img}</div></td>
-          <td>${nm}</td>
-          <td>${pr}</td>
-          <td>${cat}</td>
-          <td>${active}</td>
-          <td>${so}</td>
-          <td>
-            <div class="k">
-              <button class="btn" data-edit="${it.id}" style="height:40px">تعديل</button>
-              <button class="btn" data-toggle="${it.id}" style="height:40px">${it.is_active ? "إخفاء" : "إظهار"}</button>
-              <button class="btn danger" data-del="${it.id}" style="height:40px">حذف</button>
-            </div>
-          </td>
-        `;
-        itemsTbody.appendChild(tr);
-      }
-
-      itemsTbody.querySelectorAll("[data-edit]").forEach(b=> b.addEventListener("click", ()=> startEdit(b.dataset.edit)));
-      itemsTbody.querySelectorAll("[data-toggle]").forEach(b=> b.addEventListener("click", ()=> toggleItem(b.dataset.toggle)));
-      itemsTbody.querySelectorAll("[data-del]").forEach(b=> b.addEventListener("click", ()=> deleteItem(b.dataset.del)));
-    }
-
-    async function startEdit(id){
-      hideMsg(itemMsg);
-      const { data, error } = await supabase.from("menu_items").select("*").eq("id", id).single();
-      if(error){ showMsg(itemMsg, error.message, true); return; }
-
-      editingId = id;
-      nameAr.value = data.name_ar || "";
-      nameEn.value = data.name_en || "";
-      price.value = data.price ?? "";
-      category.value = data.category || "";
-      descAr.value = data.desc_ar || "";
-      descEn.value = data.desc_en || "";
-      isActive.value = data.is_active ? "true" : "false";
-      sortOrder.value = data.sort_order ?? 0;
-      tags.value = data.tags || "";
-      imageUrl.value = data.image_url || "";
-      itemFile.value = "";
-      saveItem.textContent = "حفظ التعديل";
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    async function toggleItem(id){
-      const { data, error } = await supabase.from("menu_items").select("is_active").eq("id", id).single();
-      if(error){ showMsg(itemMsg, error.message, true); return; }
-      const res = await supabase.from("menu_items").update({ is_active: !data.is_active }).eq("id", id);
-      if(res.error){ showMsg(itemMsg, res.error.message, true); return; }
-      await loadItems();
-    }
-
-    async function deleteItem(id){
-      if(!confirm("أكيد حذف الوجبة؟")) return;
-      const res = await supabase.from("menu_items").delete().eq("id", id);
-      if(res.error){ showMsg(itemMsg, res.error.message, true); return; }
-      await loadItems();
-    }
-
-    /************ SETTINGS ************/
-    function applyTopLogo(url){
-      topLogoBox.innerHTML = url ? `<img src="${url}" alt="logo">` : `<span class="mono">🐐</span>`;
-    }
-
-    saveSettingsBtn.addEventListener("click", async ()=>{
-      hideMsg(setMsg);
-
-      const hex = normalizeHex(primaryColor.value);
-      if(primaryColor.value.trim() && !hex){
-        showMsg(setMsg, "لون الزر غير صحيح. مثال: #d6b45a", true);
-        return;
-      }
-
-      try{
-        if(logoFile?.files?.length){
-          const u = await uploadLogoIfAny();
-          if(u) logoUrl.value = u;
-          logoFile.value = "";
-        }
-        if(bgFile?.files?.length){
-          const u = await uploadBgIfAny();
-          if(u) bgUrl.value = u;
-          bgFile.value = "";
-        }
-      }catch(e){
-        showMsg(setMsg, "خطأ رفع ملف: " + (e.message||e), true);
-        return;
+      if(bgFile.files && bgFile.files[0]){
+        finalBg = await uploadToBucket(bgFile.files[0], "branding");
       }
 
       const payload = {
         id: 1,
-        menu_title: (menuTitle.value||"").trim() || "GOAT Menu",
-        primary_color: hex || null,
-        logo_url: (logoUrl.value||"").trim() || null,
-        bg_url: (bgUrl.value||"").trim() || null,
+        title: brandTitle.value.trim() || "GOAT Menu",
+        accent_color: brandColor.value.trim() || "#d6b45a",
+        logo_url: finalLogo,
+        bg_url: finalBg
       };
 
-      const res = await supabase.from("menu_settings").upsert(payload);
-      if(res.error){
-        showMsg(setMsg, res.error.message, true);
-        return;
-      }
-      applyTopLogo(payload.logo_url);
-      showMsg(setMsg, "✅ تم حفظ الإعدادات");
-    });
+      const { error } = await supabaseClient.from(T_SETTINGS).upsert(payload).select().single();
+      if(error) throw error;
 
-    loadSettingsBtn.addEventListener("click", loadSettings);
+      if(finalLogo) brandLogo.src = finalLogo;
 
-    async function loadSettings(){
-      hideMsg(setMsg);
-      const { data, error } = await supabase.from("menu_settings").select("*").eq("id", 1).single();
-      if(error){
-        menuTitle.value = "GOAT Menu";
-        primaryColor.value = "#d6b45a";
-        logoUrl.value = "";
-        bgUrl.value = "";
-        applyTopLogo("");
-        showMsg(setMsg, "تم تحميل الإعدادات (افتراضي).");
-        return;
-      }
-      menuTitle.value = data.menu_title || "GOAT Menu";
-      primaryColor.value = data.primary_color || "#d6b45a";
-      logoUrl.value = data.logo_url || "";
-      bgUrl.value = data.bg_url || "";
-      applyTopLogo(data.logo_url);
-      showMsg(setMsg, "✅ تم تحميل الإعدادات");
+      msg(styleMsg, "تم حفظ الإعدادات ✅", "ok");
+    }catch(e){
+      msg(styleMsg, e.message || "حدث خطأ", "err");
     }
+  }
 
-    /************ INIT ************/
-    (async ()=>{
-      await refreshSessionUI();
-      setActiveTab("items");
-      await loadSettings();
-      await loadItems();
-
-      supabase.auth.onAuthStateChange(async ()=>{
-        await refreshSessionUI();
-      });
-    })();
-  </script>
+  // Init
+  (async function init(){
+    await refreshAuthUI();
+    await loadItems();
+    await loadSettings();
+  })();
+</script>
 </body>
 </html>
