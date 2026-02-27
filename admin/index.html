@@ -1,473 +1,773 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>لوحة تحكم مينيو جوت</title>
-<style>
-  :root{
-    --bg:#0b0b0b;
-    --card:#111;
-    --line:rgba(255,255,255,.12);
-    --muted:#b8b8b8;
-    --accent:#d6b45a;
-    --radius:14px;
-  }
-  body{margin:0;padding:24px;font-family:system-ui;background:var(--bg);color:#fff}
-  .wrap{max-width:980px;margin:auto}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
-  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-  .between{justify-content:space-between}
-  h1,h2{margin:0 0 10px}
-  .muted{color:var(--muted);font-size:13px}
-  input,textarea,select,button{
-    width:100%;padding:11px;border-radius:12px;border:1px solid var(--line);
-    background:#0b0b0b;color:#fff;font-size:15px
-  }
-  textarea{min-height:88px}
-  button{cursor:pointer}
-  .btn{background:var(--accent);color:#000;border:none;font-weight:800}
-  .btn2{background:transparent;border:1px solid var(--line)}
-  .btnDanger{background:#ff4d4d;color:#000;border:none;font-weight:800}
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
-  .tab{padding:10px 12px;border-radius:999px;border:1px solid var(--line);background:transparent;color:#fff}
-  .tab.active{background:var(--accent);color:#000;border:none;font-weight:800}
-  .list{margin-top:12px;display:grid;gap:10px}
-  .item{border:1px solid var(--line);border-radius:14px;padding:12px;background:#0d0d0d}
-  .pill{font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:#fff}
-  .pill.off{opacity:.55}
-  .img{width:64px;height:64px;border-radius:12px;object-fit:cover;border:1px solid var(--line);background:#111}
-  .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-  .hide{display:none}
-  .hr{height:1px;background:var(--line);margin:14px 0}
-  .note{font-size:13px;color:var(--muted)}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>لوحة تحكم GOAT Menu</title>
+
+  <style>
+    :root{
+      --bg:#0b0b0b;
+      --panel:#111;
+      --card:#121212;
+      --line:rgba(255,255,255,.10);
+      --muted:#b9b9b9;
+      --fg:#f2f2f2;
+      --gold:#d6b45a;
+      --danger:#ff4d4d;
+      --ok:#19c37d;
+      --radius:16px;
+      --shadow:0 18px 50px rgba(0,0,0,.45);
+      --max:1100px;
+      --btnh:52px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      background: radial-gradient(900px 500px at 70% 0%, rgba(214,180,90,.12), transparent 55%),
+                  radial-gradient(700px 500px at 20% 20%, rgba(255,255,255,.06), transparent 55%),
+                  var(--bg);
+      color:var(--fg);
+    }
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding:18px;}
+    .top{
+      display:flex; gap:12px; align-items:center; justify-content:space-between;
+      padding:16px 18px; border:1px solid var(--line); border-radius:var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+      position:sticky; top:10px; z-index:10;
+      backdrop-filter: blur(8px);
+    }
+    .brand{display:flex; gap:12px; align-items:center;}
+    .logo{
+      width:44px; height:44px; border-radius:12px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      display:grid; place-items:center;
+      overflow:hidden;
+    }
+    .logo img{width:100%; height:100%; object-fit:cover}
+    .h1{font-size:18px; font-weight:900; line-height:1.1}
+    .sub{font-size:12px; color:var(--muted)}
+    .right{display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
+    .pill{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      padding:8px 10px;
+      border-radius:999px;
+      font-size:12px;
+      color:var(--muted);
+      max-width: 60vw;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .btn{
+      height:var(--btnh);
+      padding:0 16px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color:var(--fg);
+      font-weight:800;
+      cursor:pointer;
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      transition:.15s;
+    }
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.06)}
+    .btn.gold{background: var(--gold); border-color: rgba(0,0,0,.25); color:#111}
+    .btn.danger{background: rgba(255,77,77,.12); border-color: rgba(255,77,77,.35); color:#ffd0d0}
+    .btn.ghost{background: transparent}
+    .grid{
+      display:grid;
+      grid-template-columns: 260px 1fr;
+      gap:14px;
+      margin-top:14px;
+    }
+    @media (max-width: 900px){
+      .grid{grid-template-columns: 1fr}
+    }
+    .side, .main{
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.03);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .side{padding:12px;}
+    .navbtn{
+      width:100%;
+      height:52px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color:var(--fg);
+      font-weight:900;
+      cursor:pointer;
+      margin-bottom:10px;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .navbtn.active{background: var(--gold); color:#111; border-color: rgba(0,0,0,.25)}
+    .card{
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(0,0,0,.25);
+      padding:14px;
+      margin:14px;
+    }
+    .title{font-size:22px; font-weight:900; margin:0 0 4px;}
+    .hint{color:var(--muted); font-size:13px; margin:0}
+    .row{display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:12px;}
+    @media (max-width: 700px){ .row{grid-template-columns:1fr} }
+    .field{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius:14px;
+      padding:12px;
+    }
+    .field label{display:block; font-size:12px; color:var(--muted); margin-bottom:8px;}
+    input, textarea, select{
+      width:100%;
+      background: transparent;
+      border:0;
+      outline: none;
+      color: var(--fg);
+      font-size:15px;
+    }
+    textarea{min-height:86px; resize:vertical}
+    .inline{display:flex; gap:10px; align-items:center;}
+    .small{font-size:12px; color:var(--muted)}
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;}
+    .hr{height:1px; background: var(--line); margin:14px 0;}
+    .msg{margin-top:10px; font-weight:900; color: var(--ok);}
+    .err{color:#ff9a9a}
+    .table{
+      margin-top:12px;
+      border:1px solid var(--line);
+      border-radius: 14px;
+      overflow:hidden;
+    }
+    table{width:100%; border-collapse: collapse; font-size:14px;}
+    th, td{padding:12px 10px; border-bottom:1px solid rgba(255,255,255,.08); vertical-align: middle;}
+    th{text-align:right; font-size:12px; color:var(--muted); background: rgba(255,255,255,.03);}
+    tr:hover td{background: rgba(255,255,255,.02)}
+    .tag{
+      display:inline-block;
+      padding:5px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      font-size:12px;
+      color:var(--muted);
+      margin:2px 0;
+    }
+    .thumb{
+      width:46px; height:46px; border-radius:12px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      overflow:hidden;
+      display:grid; place-items:center;
+    }
+    .thumb img{width:100%; height:100%; object-fit:cover}
+    .k{display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
+    .mono{font-family: ui-monospace, Menlo, Monaco, Consolas, "Courier New", monospace;}
+  </style>
 </head>
 
 <body>
-<div class="wrap">
-
-  <!-- AUTH -->
-  <div id="authCard" class="card">
-    <h1>لوحة تحكم مينيو جوت</h1>
-    <p class="muted">تسجيل دخول (حساب واحد للمطعم)</p>
-    <div class="grid2">
-      <input id="email" type="email" placeholder="الإيميل" />
-      <input id="password" type="password" placeholder="كلمة المرور" />
-    </div>
-    <div class="row">
-      <button id="loginBtn" class="btn">تسجيل دخول</button>
-    </div>
-    <p id="authMsg" class="muted"></p>
-  </div>
-
-  <!-- APP -->
-  <div id="app" class="hide">
-    <div class="card">
-      <div class="row between">
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <div class="logo" id="topLogoBox"><span class="mono">🐐</span></div>
         <div>
-          <h1 style="margin:0">لوحة التحكم</h1>
-          <div class="muted" id="userInfo"></div>
-        </div>
-        <div class="row">
-          <button id="logoutBtn" class="btn2">خروج</button>
+          <div class="h1">لوحة تحكم GOAT Menu</div>
+          <div class="sub">إضافة / تعديل / حذف / إخفاء + إعدادات الشكل</div>
         </div>
       </div>
-
-      <div class="tabs">
-        <button class="tab active" data-tab="items">الوجبات</button>
-        <button class="tab" data-tab="settings">إعدادات الشكل</button>
+      <div class="right">
+        <div class="pill" id="userPill">غير مسجل</div>
+        <button class="btn gold" id="btnLogin">تسجيل الدخول</button>
+        <button class="btn danger" id="btnLogout" style="display:none">خروج</button>
       </div>
-
-      <!-- ITEMS TAB -->
-      <div id="tab-items">
-        <h2>الوجبات</h2>
-        <p class="muted">إضافة / تعديل / حذف / إخفاء</p>
-
-        <div class="hr"></div>
-
-        <h3 style="margin:0 0 8px">إضافة / تعديل وجبة</h3>
-        <div class="grid2">
-          <input id="name_ar" placeholder="اسم الوجبة (عربي)*" />
-          <input id="name_en" placeholder="Name (EN) اختياري" />
-        </div>
-        <div class="grid2">
-          <input id="price" type="number" step="0.001" placeholder="السعر (مثال 1.500)*" />
-          <select id="is_active">
-            <option value="true">ظاهر</option>
-            <option value="false">مخفي</option>
-          </select>
-        </div>
-        <div class="grid2">
-          <textarea id="desc_ar" placeholder="الوصف عربي (اختياري)"></textarea>
-          <textarea id="desc_en" placeholder="Description EN (optional)"></textarea>
-        </div>
-
-        <div class="grid3">
-          <input id="sort_order" type="number" placeholder="ترتيب الظهور (0..)" value="0" />
-          <input id="image_url" placeholder="رابط صورة (اختياري)" />
-          <input id="image_file" type="file" accept="image/*" />
-        </div>
-
-        <div class="actions">
-          <button id="saveBtn" class="btn">حفظ</button>
-          <button id="resetBtn" class="btn2">تفريغ</button>
-          <span class="note">تقدر تحط رابط صورة أو ترفع صورة (الرفع أفضل)</span>
-        </div>
-        <p id="saveMsg" class="muted"></p>
-
-        <div class="hr"></div>
-
-        <div class="row between">
-          <h3 style="margin:0">قائمة الوجبات</h3>
-          <button id="refreshBtn" class="btn2">تحديث</button>
-        </div>
-        <div id="itemsList" class="list"></div>
-      </div>
-
-      <!-- SETTINGS TAB -->
-      <div id="tab-settings" class="hide">
-        <h2>إعدادات الشكل</h2>
-        <p class="muted">لوجو + خلفية + لون زر</p>
-
-        <div class="hr"></div>
-
-        <div class="grid2">
-          <input id="brand_name" placeholder="اسم العرض (Brand name)" />
-          <div class="grid2">
-  <input id="logo_url" placeholder="رابط اللوجو (URL)" />
-  <input id="logo_file" type="file" accept="image/*" />
-</div>
-        </div>
-
-        <div class="grid2">
-          <input id="background_color" placeholder="لون الخلفية (مثال #0b0b0b)" />
-          <input id="background_image_url" placeholder="رابط صورة خلفية (اختياري)" />
-        </div>
-
-        <div class="grid2">
-          <input id="accent_color" placeholder="لون الأزرار (مثال #d6b45a)" />
-          <div></div>
-        </div>
-
-        <div class="actions">
-          <button id="saveSettingsBtn" class="btn">حفظ الإعدادات</button>
-          <button id="loadSettingsBtn" class="btn2">تحميل الإعدادات</button>
-        </div>
-        <p id="settingsMsg" class="muted"></p>
-
-        <p class="note">بعد ما نخلي menu.html يقرأ الإعدادات، أي تغيير هنا ينعكس على صفحة المينيو.</p>
-      </div>
-
     </div>
-  </div>
 
-</div>
+    <div class="grid">
+      <div class="side">
+        <button class="navbtn active" data-tab="items">🍔 الوجبات</button>
+        <button class="navbtn" data-tab="style">🎨 إعدادات الشكل</button>
 
-<script type="module">
-  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+        <div class="card" style="margin:10px 0 0;">
+          <div class="small">
+            رفع الصور يتم إلى Storage bucket اسمها <span class="mono">menu-images</span>.
+          </div>
+        </div>
+      </div>
 
-  const supabase = createClient(
-    "https://dcenkkyxsklzhcnjycoc.supabase.co",
-    "sb_publishable_QnMtHgIxfr_CwM89PBKT7g_Li1VqRjp"
-  );
+      <div class="main">
 
-  // UI refs
-  const authCard = document.getElementById("authCard");
-  const app = document.getElementById("app");
-  const authMsg = document.getElementById("authMsg");
-  const userInfo = document.getElementById("userInfo");
+        <!-- LOGIN -->
+        <div class="card" id="loginCard" style="display:none">
+          <div class="title">تسجيل الدخول</div>
+          <p class="hint">استخدم نفس حساب Supabase Auth.</p>
 
-  const emailEl = document.getElementById("email");
-  const passEl = document.getElementById("password");
-  document.getElementById("loginBtn").addEventListener("click", login);
-  document.getElementById("logoutBtn").addEventListener("click", logout);
-
-  // Tabs
-  document.querySelectorAll(".tab").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
-      btn.classList.add("active");
-      const tab = btn.dataset.tab;
-      document.getElementById("tab-items").classList.toggle("hide", tab!=="items");
-      document.getElementById("tab-settings").classList.toggle("hide", tab!=="settings");
-    });
-  });
-
-  // Item form
-  const nameAr = document.getElementById("name_ar");
-  const nameEn = document.getElementById("name_en");
-  const price = document.getElementById("price");
-  const descAr = document.getElementById("desc_ar");
-  const descEn = document.getElementById("desc_en");
-  const isActive = document.getElementById("is_active");
-  const sortOrder = document.getElementById("sort_order");
-  const imageUrl = document.getElementById("image_url");
-  const imageFile = document.getElementById("image_file");
-  const saveMsg = document.getElementById("saveMsg");
-  const itemsList = document.getElementById("itemsList");
-
-  let editingId = null;
-  document.getElementById("saveBtn").addEventListener("click", saveItem);
-  document.getElementById("resetBtn").addEventListener("click", resetForm);
-  document.getElementById("refreshBtn").addEventListener("click", loadItems);
-
-  // Settings form
-  const brandName = document.getElementById("brand_name");
-  const logoUrl = document.getElementById("logo_url");
-  const bgColor = document.getElementById("background_color");
-  const bgImageUrl = document.getElementById("background_image_url");
-  const accentColor = document.getElementById("accent_color");
-  const settingsMsg = document.getElementById("settingsMsg");
-  document.getElementById("saveSettingsBtn").addEventListener("click", saveSettings);
-  document.getElementById("loadSettingsBtn").addEventListener("click", loadSettings);
-
-  function setMsg(el, txt){ el.textContent = txt || ""; }
-
-  async function login(){
-    setMsg(authMsg, "...");
-    const { error } = await supabase.auth.signInWithPassword({
-      email: emailEl.value.trim(),
-      password: passEl.value
-    });
-    if(error) return setMsg(authMsg, "خطأ: " + error.message);
-    await boot();
-  }
-
-  async function logout(){
-    await supabase.auth.signOut();
-    await boot();
-  }
-
-  async function boot(){
-    const { data } = await supabase.auth.getSession();
-    const session = data.session;
-
-    if(!session){
-      authCard.classList.remove("hide");
-      app.classList.add("hide");
-      return;
-    }
-
-    authCard.classList.add("hide");
-    app.classList.remove("hide");
-    userInfo.textContent = "مسجل دخول: " + session.user.email;
-
-    await loadItems();
-    await loadSettings();
-  }
-
-  async function uploadImageIfAny(){
-    const file = imageFile.files?.[0];
-    if(!file) return null;
-
-    const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
-    const path = `items/${crypto.randomUUID()}.${ext}`;
-
-    const { error: upErr } = await supabase.storage
-      .from("menu-images")
-      .upload(path, file, { upsert:false, contentType: file.type });
-
-    if(upErr) throw upErr;
-
-    const { data } = supabase.storage.from("menu-images").getPublicUrl(path);
-    return data.publicUrl;
-  }
-
-  async function saveItem(){
-    try{
-      setMsg(saveMsg, "جاري الحفظ...");
-      const payload = {
-        name_ar: nameAr.value.trim(),
-        name_en: nameEn.value.trim() || null,
-        price: Number(price.value),
-        desc_ar: descAr.value.trim() || null,
-        desc_en: descEn.value.trim() || null,
-        is_active: isActive.value === "true",
-        sort_order: Number(sortOrder.value || 0),
-      };
-
-      if(!payload.name_ar) return setMsg(saveMsg, "اكتب اسم الوجبة بالعربي.");
-      if(!Number.isFinite(payload.price)) return setMsg(saveMsg, "اكتب سعر صحيح مثل 1.500");
-
-      // image: file preferred, else url
-      let finalImage = null;
-      if(imageFile.files?.length){
-        finalImage = await uploadImageIfAny();
-      } else if(imageUrl.value.trim()){
-        let u = imageUrl.value.trim();
-        if(!u.startsWith("http://") && !u.startsWith("https://")) u = "https://" + u;
-        finalImage = u;
-      }
-      if(finalImage) payload.image_url = finalImage;
-
-      if(editingId){
-        const { error } = await supabase.from("menu_items").update(payload).eq("id", editingId);
-        if(error) throw error;
-        setMsg(saveMsg, "تم التعديل ✅");
-      } else {
-        const { error } = await supabase.from("menu_items").insert(payload);
-        if(error) throw error;
-        setMsg(saveMsg, "تمت الإضافة ✅");
-      }
-
-      resetForm();
-      await loadItems();
-    }catch(e){
-      setMsg(saveMsg, "خطأ: " + e.message);
-    }
-  }
-
-  function resetForm(){
-    editingId = null;
-    nameAr.value = "";
-    nameEn.value = "";
-    price.value = "";
-    descAr.value = "";
-    descEn.value = "";
-    isActive.value = "true";
-    sortOrder.value = "0";
-    imageUrl.value = "";
-    imageFile.value = "";
-    setMsg(saveMsg, "");
-  }
-
-  async function loadItems(){
-    itemsList.innerHTML = `<div class="muted">جاري التحميل...</div>`;
-    const { data, error } = await supabase
-      .from("menu_items")
-      .select("id,name_ar,price,is_active,sort_order,image_url,created_at")
-      .order("sort_order", { ascending:true })
-      .order("created_at", { ascending:false });
-
-    if(error){
-      itemsList.innerHTML = `<div class="muted">خطأ: ${error.message}</div>`;
-      return;
-    }
-    if(!data.length){
-      itemsList.innerHTML = `<div class="muted">لا توجد وجبات</div>`;
-      return;
-    }
-
-    itemsList.innerHTML = "";
-    for(const it of data){
-      const div = document.createElement("div");
-      div.className = "item";
-      div.innerHTML = `
-        <div class="row between">
-          <div class="row" style="gap:12px">
-            <img class="img" src="${it.image_url || ""}" onerror="this.style.display='none'">
-            <div>
-              <div style="font-weight:900;font-size:16px">${it.name_ar}</div>
-              <div class="muted">${Number(it.price).toFixed(3)} ر.ع • ترتيب: ${it.sort_order ?? 0}</div>
+          <div class="row">
+            <div class="field">
+              <label>البريد</label>
+              <input id="loginEmail" type="email" placeholder="name@email.com" />
+            </div>
+            <div class="field">
+              <label>كلمة المرور</label>
+              <input id="loginPass" type="password" placeholder="••••••••" />
             </div>
           </div>
-          <span class="pill ${it.is_active ? "" : "off"}">${it.is_active ? "ظاهر" : "مخفي"}</span>
+
+          <div class="actions">
+            <button class="btn gold" id="doLogin">دخول</button>
+            <button class="btn ghost" id="closeLogin">إلغاء</button>
+          </div>
+
+          <div class="msg err" id="loginMsg" style="display:none"></div>
         </div>
 
-        <div class="actions">
-          <button class="btn2" data-edit="${it.id}">تعديل</button>
-          <button class="btn2" data-toggle="${it.id}">${it.is_active ? "إخفاء" : "إظهار"}</button>
-          <button class="btnDanger" data-del="${it.id}">حذف</button>
+        <!-- ITEMS -->
+        <div class="card" id="tab-items">
+          <div class="title">الوجبات</div>
+          <p class="hint">إضافة / تعديل / حذف / إخفاء + رفع صورة من الهاتف مباشرة.</p>
+
+          <div class="row">
+            <div class="field">
+              <label>اسم الوجبة (عربي) *</label>
+              <input id="name_ar" placeholder="مثال: جوت برجر" />
+            </div>
+            <div class="field">
+              <label>Name (EN) اختياري</label>
+              <input id="name_en" placeholder="Goat Burger" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label>السعر (مثال 1.500) *</label>
+              <input id="price" inputmode="decimal" placeholder="1.500" />
+            </div>
+            <div class="field">
+              <label>القسم (اختياري)</label>
+              <input id="category" placeholder="برجر / مشروبات..." />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label>الوصف عربي (اختياري)</label>
+              <textarea id="desc_ar" placeholder="مثال: شريحتين لحم..."></textarea>
+            </div>
+            <div class="field">
+              <label>Description EN (optional)</label>
+              <textarea id="desc_en" placeholder="Two beef patties..."></textarea>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label>الحالة</label>
+              <select id="is_active">
+                <option value="true">ظاهر</option>
+                <option value="false">مخفي</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>الترتيب</label>
+              <input id="sort_order" inputmode="numeric" placeholder="0" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label>Tags (اختياري) — بفواصل</label>
+              <input id="tags" placeholder="جديد, سبايسي, بيف" />
+            </div>
+
+            <div class="field">
+              <label>صورة الوجبة</label>
+              <div class="inline">
+                <input id="item_file" type="file" accept="image/*" />
+              </div>
+              <div class="small">أو حط رابط صورة</div>
+              <input id="image_url" placeholder="https://..." />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn gold" id="saveItem">حفظ</button>
+            <button class="btn" id="clearForm">تفريغ</button>
+            <button class="btn" id="refreshList">تحديث</button>
+          </div>
+
+          <div class="msg" id="itemMsg" style="display:none"></div>
+
+          <div class="hr"></div>
+
+          <div class="table">
+            <table>
+              <thead>
+                <tr>
+                  <th>صورة</th>
+                  <th>الاسم</th>
+                  <th>السعر</th>
+                  <th>قسم</th>
+                  <th>الحالة</th>
+                  <th>ترتيب</th>
+                  <th>إجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="itemsTbody"></tbody>
+            </table>
+          </div>
         </div>
-      `;
-      itemsList.appendChild(div);
+
+        <!-- STYLE -->
+        <div class="card" id="tab-style" style="display:none">
+          <div class="title">إعدادات الشكل</div>
+          <p class="hint">تغيير لوجو/خلفية/لون زر بسهولة.</p>
+
+          <div class="row">
+            <div class="field">
+              <label>عنوان المينيو</label>
+              <input id="menu_title" placeholder="GOAT Menu" />
+            </div>
+            <div class="field">
+              <label>لون الزر الأساسي</label>
+              <input id="primary_color" placeholder="#d6b45a" />
+              <div class="small">اكتبها هكذا: #d6b45a</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label>رابط اللوجو (URL)</label>
+              <input id="logo_url" placeholder="https://..." />
+              <div class="small">أو ارفع اللوجو مباشرة</div>
+              <input id="logo_file" type="file" accept="image/*" />
+            </div>
+
+            <div class="field">
+              <label>الخلفية (اختياري)</label>
+              <input id="bg_url" placeholder="رابط صورة خلفية" />
+              <div class="small">أو ارفع الخلفية مباشرة</div>
+              <input id="bg_file" type="file" accept="image/*" />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn gold" id="saveSettings">حفظ الإعدادات</button>
+            <button class="btn" id="loadSettings">تحميل الإعدادات</button>
+          </div>
+
+          <div class="msg" id="setMsg" style="display:none"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    /************ CONFIG ************/
+    const SUPABASE_URL = "https://dcenkkyxsklzhcnjycoc.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_QnMtHgIxfr_CwM89PBKT7g_Li1VqRjp";
+
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    /************ ELEMENTS ************/
+    const userPill = document.getElementById("userPill");
+    const btnLogin = document.getElementById("btnLogin");
+    const btnLogout = document.getElementById("btnLogout");
+    const loginCard = document.getElementById("loginCard");
+    const loginEmail = document.getElementById("loginEmail");
+    const loginPass = document.getElementById("loginPass");
+    const doLogin = document.getElementById("doLogin");
+    const closeLogin = document.getElementById("closeLogin");
+    const loginMsg = document.getElementById("loginMsg");
+    const topLogoBox = document.getElementById("topLogoBox");
+
+    const navBtns = Array.from(document.querySelectorAll(".navbtn"));
+    const tabItems = document.getElementById("tab-items");
+    const tabStyle = document.getElementById("tab-style");
+
+    const nameAr = document.getElementById("name_ar");
+    const nameEn = document.getElementById("name_en");
+    const price = document.getElementById("price");
+    const category = document.getElementById("category");
+    const descAr = document.getElementById("desc_ar");
+    const descEn = document.getElementById("desc_en");
+    const isActive = document.getElementById("is_active");
+    const sortOrder = document.getElementById("sort_order");
+    const tags = document.getElementById("tags");
+    const imageUrl = document.getElementById("image_url");
+    const itemFile = document.getElementById("item_file");
+    const saveItem = document.getElementById("saveItem");
+    const clearForm = document.getElementById("clearForm");
+    const itemMsg = document.getElementById("itemMsg");
+    const refreshList = document.getElementById("refreshList");
+    const itemsTbody = document.getElementById("itemsTbody");
+
+    let editingId = null;
+
+    const menuTitle = document.getElementById("menu_title");
+    const primaryColor = document.getElementById("primary_color");
+    const logoUrl = document.getElementById("logo_url");
+    const bgUrl = document.getElementById("bg_url");
+    const logoFile = document.getElementById("logo_file");
+    const bgFile = document.getElementById("bg_file");
+    const saveSettingsBtn = document.getElementById("saveSettings");
+    const loadSettingsBtn = document.getElementById("loadSettings");
+    const setMsg = document.getElementById("setMsg");
+
+    /************ HELPERS ************/
+    function showMsg(el, text, isError=false){
+      el.style.display = "block";
+      el.classList.toggle("err", !!isError);
+      el.textContent = text;
+    }
+    function hideMsg(el){
+      el.style.display="none";
+      el.textContent="";
+      el.classList.remove("err");
+    }
+    function normalizeHex(v){
+      if(!v) return "";
+      v = v.trim();
+      if(!v) return "";
+      if(v[0] !== "#") v = "#"+v;
+      v = v.replace(/#+$/g,"");
+      if(!/^#[0-9a-fA-F]{6}$/.test(v)) return "";
+      return v.toLowerCase();
     }
 
-    // bind buttons
-    itemsList.querySelectorAll("[data-edit]").forEach(b=>{
-      b.addEventListener("click", ()=> startEdit(b.getAttribute("data-edit")));
-    });
-    itemsList.querySelectorAll("[data-toggle]").forEach(b=>{
-      b.addEventListener("click", ()=> toggleActive(b.getAttribute("data-toggle")));
-    });
-    itemsList.querySelectorAll("[data-del]").forEach(b=>{
-      b.addEventListener("click", ()=> deleteItem(b.getAttribute("data-del")));
-    });
-  }
+    async function uploadToBucket(file, folder){
+      const ext = (file.name.split(".").pop() || "png").toLowerCase();
+      const path = `${folder}/${crypto.randomUUID()}.${ext}`;
 
-  async function startEdit(id){
-    const { data, error } = await supabase
-      .from("menu_items")
-      .select("*")
-      .eq("id", id)
-      .single();
+      const { error } = await supabase.storage
+        .from("menu-images")
+        .upload(path, file, { upsert:false, contentType: file.type });
 
-    if(error) return setMsg(saveMsg, "خطأ: " + error.message);
+      if(error) throw error;
 
-    editingId = id;
-    nameAr.value = data.name_ar || "";
-    nameEn.value = data.name_en || "";
-    price.value = data.price ?? "";
-    descAr.value = data.desc_ar || "";
-    descEn.value = data.desc_en || "";
-    isActive.value = String(!!data.is_active);
-    sortOrder.value = data.sort_order ?? 0;
-    imageUrl.value = data.image_url || "";
-    imageFile.value = "";
-    setMsg(saveMsg, "وضع التعديل: عدّل الحقول ثم اضغط حفظ ✅");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  async function toggleActive(id){
-    const { data, error } = await supabase.from("menu_items").select("is_active").eq("id", id).single();
-    if(error) return alert("خطأ: " + error.message);
-
-    const next = !data.is_active;
-    const { error: upErr } = await supabase.from("menu_items").update({ is_active: next }).eq("id", id);
-    if(upErr) return alert("خطأ: " + upErr.message);
-
-    await loadItems();
-  }
-
-  async function deleteItem(id){
-    const ok = confirm("متأكد تحذف الوجبة؟");
-    if(!ok) return;
-    const { error } = await supabase.from("menu_items").delete().eq("id", id);
-    if(error) return alert("خطأ: " + error.message);
-    await loadItems();
-  }
-
-  async function loadSettings(){
-    setMsg(settingsMsg, "جاري التحميل...");
-    const { data, error } = await supabase
-      .from("menu_settings")
-      .select("*")
-      .eq("id", 1)
-      .single();
-
-    if(error){
-      setMsg(settingsMsg, "خطأ: " + error.message);
-      return;
+      const { data } = supabase.storage.from("menu-images").getPublicUrl(path);
+      return data.publicUrl;
     }
 
-    brandName.value = data.brand_name || "";
-    logoUrl.value = data.logo_url || "";
-    bgColor.value = data.background_color || "#0b0b0b";
-    bgImageUrl.value = data.background_image_url || "";
-    accentColor.value = data.accent_color || "#d6b45a";
+    async function uploadItemImageIfAny(){
+      const file = itemFile.files?.[0];
+      if(!file) return null;
+      return await uploadToBucket(file, "items");
+    }
+    async function uploadLogoIfAny(){
+      const file = logoFile.files?.[0];
+      if(!file) return null;
+      return await uploadToBucket(file, "branding");
+    }
+    async function uploadBgIfAny(){
+      const file = bgFile.files?.[0];
+      if(!file) return null;
+      return await uploadToBucket(file, "branding");
+    }
 
-    setMsg(settingsMsg, "تم تحميل الإعدادات ✅");
-  }
+    function setActiveTab(tab){
+      navBtns.forEach(b=>b.classList.toggle("active", b.dataset.tab === tab));
+      tabItems.style.display = (tab === "items") ? "block" : "none";
+      tabStyle.style.display = (tab === "style") ? "block" : "none";
+    }
 
-  async function saveSettings(){
-    setMsg(settingsMsg, "جاري الحفظ...");
-    const payload = {
-      brand_name: brandName.value.trim() || "GOAT Menu",
-      logo_url: logoUrl.value.trim() || null,
-      background_color: bgColor.value.trim() || "#0b0b0b",
-      background_image_url: bgImageUrl.value.trim() || null,
-      accent_color: accentColor.value.trim() || "#d6b45a",
-    };
-    const { error } = await supabase.from("menu_settings").update(payload).eq("id", 1);
-    if(error) return setMsg(settingsMsg, "خطأ: " + error.message);
-    setMsg(settingsMsg, "تم حفظ الإعدادات ✅");
-  }
+    /************ AUTH ************/
+    btnLogin.addEventListener("click", ()=>{
+      loginCard.style.display = "block";
+      hideMsg(loginMsg);
+    });
+    closeLogin.addEventListener("click", ()=>{
+      loginCard.style.display = "none";
+      hideMsg(loginMsg);
+    });
 
-  // start
-  boot();
-</script>
+    doLogin.addEventListener("click", async ()=>{
+      hideMsg(loginMsg);
+      const email = (loginEmail.value||"").trim();
+      const pass = (loginPass.value||"").trim();
+      if(!email || !pass){
+        showMsg(loginMsg, "اكتب البريد وكلمة المرور.", true);
+        return;
+      }
+      const { error } = await supabase.auth.signInWithPassword({ email, password: pass });
+      if(error){
+        showMsg(loginMsg, error.message, true);
+        return;
+      }
+      loginCard.style.display = "none";
+      await refreshSessionUI();
+      await loadItems();
+      await loadSettings();
+    });
+
+    btnLogout.addEventListener("click", async ()=>{
+      await supabase.auth.signOut();
+      await refreshSessionUI();
+    });
+
+    async function refreshSessionUI(){
+      const { data } = await supabase.auth.getUser();
+      const u = data?.user;
+      if(u){
+        userPill.textContent = `مسجل دخول: ${u.email}`;
+        btnLogin.style.display = "none";
+        btnLogout.style.display = "inline-flex";
+      }else{
+        userPill.textContent = "غير مسجل";
+        btnLogin.style.display = "inline-flex";
+        btnLogout.style.display = "none";
+      }
+    }
+
+    /************ NAV ************/
+    navBtns.forEach(b=> b.addEventListener("click", ()=> setActiveTab(b.dataset.tab)));
+
+    /************ ITEMS ************/
+    function clearItemForm(){
+      editingId = null;
+      nameAr.value = "";
+      nameEn.value = "";
+      price.value = "";
+      category.value = "";
+      descAr.value = "";
+      descEn.value = "";
+      isActive.value = "true";
+      sortOrder.value = "0";
+      tags.value = "";
+      imageUrl.value = "";
+      itemFile.value = "";
+      hideMsg(itemMsg);
+      saveItem.textContent = "حفظ";
+    }
+    clearForm.addEventListener("click", clearItemForm);
+    refreshList.addEventListener("click", loadItems);
+
+    saveItem.addEventListener("click", async ()=>{
+      hideMsg(itemMsg);
+
+      const ar = (nameAr.value||"").trim();
+      const pr = (price.value||"").trim();
+      if(!ar || !pr){
+        showMsg(itemMsg, "اسم عربي + سعر مطلوبين.", true);
+        return;
+      }
+
+      try{
+        if(itemFile?.files?.length){
+          const uploaded = await uploadItemImageIfAny();
+          if(uploaded) imageUrl.value = uploaded;
+          itemFile.value = "";
+        }
+      }catch(e){
+        showMsg(itemMsg, "خطأ رفع الصورة: " + (e.message||e), true);
+        return;
+      }
+
+      const payload = {
+        name_ar: ar,
+        name_en: (nameEn.value||"").trim() || null,
+        price: Number(pr),
+        category: (category.value||"").trim() || null,
+        desc_ar: (descAr.value||"").trim() || null,
+        desc_en: (descEn.value||"").trim() || null,
+        is_active: (isActive.value === "true"),
+        sort_order: parseInt((sortOrder.value||"0"),10) || 0,
+        image_url: (imageUrl.value||"").trim() || null,
+        tags: (tags.value||"").split(",").map(s=>s.trim()).filter(Boolean).join(",") || null,
+      };
+
+      const res = editingId
+        ? await supabase.from("menu_items").update(payload).eq("id", editingId)
+        : await supabase.from("menu_items").insert(payload);
+
+      if(res.error){
+        showMsg(itemMsg, res.error.message, true);
+        return;
+      }
+
+      showMsg(itemMsg, "✅ تم الحفظ بنجاح");
+      clearItemForm();
+      await loadItems();
+    });
+
+    async function loadItems(){
+      itemsTbody.innerHTML = "";
+      const { data, error } = await supabase
+        .from("menu_items")
+        .select("*")
+        .order("sort_order", { ascending:true })
+        .order("created_at", { ascending:false });
+
+      if(error){
+        itemsTbody.innerHTML = `<tr><td colspan="7" class="err">خطأ: ${error.message}</td></tr>`;
+        return;
+      }
+      if(!data || !data.length){
+        itemsTbody.innerHTML = `<tr><td colspan="7" class="small">لا توجد وجبات.</td></tr>`;
+        return;
+      }
+
+      for(const it of data){
+        const img = it.image_url ? `<img src="${it.image_url}" alt="">` : `<span class="mono">?</span>`;
+        const active = it.is_active ? `<span class="tag">ظاهر</span>` : `<span class="tag">مخفي</span>`;
+        const cat = it.category ? `<span class="tag">${it.category}</span>` : `<span class="tag">—</span>`;
+        const nm = `<div style="font-weight:900">${it.name_ar}</div><div class="small">${it.name_en||""}</div>`;
+        const pr = `<div class="mono">${Number(it.price).toFixed(3)}</div>`;
+        const so = `<div class="mono">${it.sort_order ?? 0}</div>`;
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><div class="thumb">${img}</div></td>
+          <td>${nm}</td>
+          <td>${pr}</td>
+          <td>${cat}</td>
+          <td>${active}</td>
+          <td>${so}</td>
+          <td>
+            <div class="k">
+              <button class="btn" data-edit="${it.id}" style="height:40px">تعديل</button>
+              <button class="btn" data-toggle="${it.id}" style="height:40px">${it.is_active ? "إخفاء" : "إظهار"}</button>
+              <button class="btn danger" data-del="${it.id}" style="height:40px">حذف</button>
+            </div>
+          </td>
+        `;
+        itemsTbody.appendChild(tr);
+      }
+
+      itemsTbody.querySelectorAll("[data-edit]").forEach(b=> b.addEventListener("click", ()=> startEdit(b.dataset.edit)));
+      itemsTbody.querySelectorAll("[data-toggle]").forEach(b=> b.addEventListener("click", ()=> toggleItem(b.dataset.toggle)));
+      itemsTbody.querySelectorAll("[data-del]").forEach(b=> b.addEventListener("click", ()=> deleteItem(b.dataset.del)));
+    }
+
+    async function startEdit(id){
+      hideMsg(itemMsg);
+      const { data, error } = await supabase.from("menu_items").select("*").eq("id", id).single();
+      if(error){ showMsg(itemMsg, error.message, true); return; }
+
+      editingId = id;
+      nameAr.value = data.name_ar || "";
+      nameEn.value = data.name_en || "";
+      price.value = data.price ?? "";
+      category.value = data.category || "";
+      descAr.value = data.desc_ar || "";
+      descEn.value = data.desc_en || "";
+      isActive.value = data.is_active ? "true" : "false";
+      sortOrder.value = data.sort_order ?? 0;
+      tags.value = data.tags || "";
+      imageUrl.value = data.image_url || "";
+      itemFile.value = "";
+      saveItem.textContent = "حفظ التعديل";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    async function toggleItem(id){
+      const { data, error } = await supabase.from("menu_items").select("is_active").eq("id", id).single();
+      if(error){ showMsg(itemMsg, error.message, true); return; }
+      const res = await supabase.from("menu_items").update({ is_active: !data.is_active }).eq("id", id);
+      if(res.error){ showMsg(itemMsg, res.error.message, true); return; }
+      await loadItems();
+    }
+
+    async function deleteItem(id){
+      if(!confirm("أكيد حذف الوجبة؟")) return;
+      const res = await supabase.from("menu_items").delete().eq("id", id);
+      if(res.error){ showMsg(itemMsg, res.error.message, true); return; }
+      await loadItems();
+    }
+
+    /************ SETTINGS ************/
+    function applyTopLogo(url){
+      topLogoBox.innerHTML = url ? `<img src="${url}" alt="logo">` : `<span class="mono">🐐</span>`;
+    }
+
+    saveSettingsBtn.addEventListener("click", async ()=>{
+      hideMsg(setMsg);
+
+      const hex = normalizeHex(primaryColor.value);
+      if(primaryColor.value.trim() && !hex){
+        showMsg(setMsg, "لون الزر غير صحيح. مثال: #d6b45a", true);
+        return;
+      }
+
+      try{
+        if(logoFile?.files?.length){
+          const u = await uploadLogoIfAny();
+          if(u) logoUrl.value = u;
+          logoFile.value = "";
+        }
+        if(bgFile?.files?.length){
+          const u = await uploadBgIfAny();
+          if(u) bgUrl.value = u;
+          bgFile.value = "";
+        }
+      }catch(e){
+        showMsg(setMsg, "خطأ رفع ملف: " + (e.message||e), true);
+        return;
+      }
+
+      const payload = {
+        id: 1,
+        menu_title: (menuTitle.value||"").trim() || "GOAT Menu",
+        primary_color: hex || null,
+        logo_url: (logoUrl.value||"").trim() || null,
+        bg_url: (bgUrl.value||"").trim() || null,
+      };
+
+      const res = await supabase.from("menu_settings").upsert(payload);
+      if(res.error){
+        showMsg(setMsg, res.error.message, true);
+        return;
+      }
+      applyTopLogo(payload.logo_url);
+      showMsg(setMsg, "✅ تم حفظ الإعدادات");
+    });
+
+    loadSettingsBtn.addEventListener("click", loadSettings);
+
+    async function loadSettings(){
+      hideMsg(setMsg);
+      const { data, error } = await supabase.from("menu_settings").select("*").eq("id", 1).single();
+      if(error){
+        menuTitle.value = "GOAT Menu";
+        primaryColor.value = "#d6b45a";
+        logoUrl.value = "";
+        bgUrl.value = "";
+        applyTopLogo("");
+        showMsg(setMsg, "تم تحميل الإعدادات (افتراضي).");
+        return;
+      }
+      menuTitle.value = data.menu_title || "GOAT Menu";
+      primaryColor.value = data.primary_color || "#d6b45a";
+      logoUrl.value = data.logo_url || "";
+      bgUrl.value = data.bg_url || "";
+      applyTopLogo(data.logo_url);
+      showMsg(setMsg, "✅ تم تحميل الإعدادات");
+    }
+
+    /************ INIT ************/
+    (async ()=>{
+      await refreshSessionUI();
+      setActiveTab("items");
+      await loadSettings();
+      await loadItems();
+
+      supabase.auth.onAuthStateChange(async ()=>{
+        await refreshSessionUI();
+      });
+    })();
+  </script>
 </body>
 </html>
