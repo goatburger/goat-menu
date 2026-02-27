@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GOAT Menu Admin</title>
+<title>لوحة تحكم مينيو جوت</title>
 
 <style>
 body{
@@ -21,19 +21,25 @@ body{
   border-radius:14px;
   border:1px solid rgba(255,255,255,.1);
 }
-input,textarea,button{
+input,button{
   width:100%;
-  padding:10px;
-  margin:6px 0;
-  border-radius:8px;
+  padding:12px;
+  margin:8px 0;
+  border-radius:10px;
   border:1px solid rgba(255,255,255,.2);
   background:#0b0b0b;
   color:#fff;
+  font-size:16px;
 }
 button{
   cursor:pointer;
   background:#d6b45a;
   color:#000;
+  font-weight:bold;
+  border:none;
+}
+#msg{
+  margin-top:10px;
   font-weight:bold;
 }
 </style>
@@ -48,7 +54,7 @@ button{
 <input id="price" type="number" step="0.001" placeholder="السعر">
 <input id="image" placeholder="رابط الصورة">
 
-<button onclick="addItem()">إضافة وجبة</button>
+<button id="addBtn">إضافة وجبة</button>
 
 <p id="msg"></p>
 </div>
@@ -62,21 +68,49 @@ const supabase = createClient(
   "sb_publishable_QnMtHgIxfr_CwM89PBKT7g_Li1VqRjp"
 );
 
-async function addItem(){
-  const name_ar = document.getElementById("name_ar").value;
-  const price = document.getElementById("price").value;
-  const image = document.getElementById("image").value;
+const msg = document.getElementById("msg");
+const addBtn = document.getElementById("addBtn");
 
-  const { error } = await supabase
-    .from("menu_items")
-    .insert([{ name_ar, price, image_url:image }]);
+addBtn.addEventListener("click", async () => {
+  try{
+    msg.innerText = "جاري الإضافة...";
 
-  if(error){
-    document.getElementById("msg").innerText = "خطأ: " + error.message;
-  }else{
-    document.getElementById("msg").innerText = "تمت الإضافة بنجاح ✅";
+    const name_ar = document.getElementById("name_ar").value.trim();
+    const priceStr = document.getElementById("price").value.trim();
+    let image = document.getElementById("image").value.trim();
+
+    if(!name_ar){
+      msg.innerText = "اكتب اسم الوجبة.";
+      return;
+    }
+
+    const price = Number(priceStr);
+    if(!Number.isFinite(price)){
+      msg.innerText = "اكتب سعر صحيح مثل 1.500";
+      return;
+    }
+
+    if(image && !image.startsWith("http")){
+      image = "https://" + image;
+    }
+
+    const { error } = await supabase
+      .from("menu_items")
+      .insert([{ name_ar, price, image_url:image || null }]);
+
+    if(error){
+      msg.innerText = "خطأ: " + error.message;
+    }else{
+      msg.innerText = "تمت الإضافة بنجاح ✅";
+      document.getElementById("name_ar").value="";
+      document.getElementById("price").value="";
+      document.getElementById("image").value="";
+    }
+
+  }catch(e){
+    msg.innerText = "خطأ غير متوقع: " + e.message;
   }
-}
+});
 
 </script>
 
