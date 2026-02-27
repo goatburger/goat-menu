@@ -1,118 +1,470 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>لوحة تحكم مينيو جوت</title>
-
 <style>
-body{
-  font-family:system-ui;
-  background:#0b0b0b;
-  color:#fff;
-  margin:0;
-  padding:30px;
-}
-.card{
-  max-width:900px;
-  margin:auto;
-  background:#111;
-  padding:20px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.1);
-}
-input,button{
-  width:100%;
-  padding:12px;
-  margin:8px 0;
-  border-radius:10px;
-  border:1px solid rgba(255,255,255,.2);
-  background:#0b0b0b;
-  color:#fff;
-  font-size:16px;
-}
-button{
-  cursor:pointer;
-  background:#d6b45a;
-  color:#000;
-  font-weight:bold;
-  border:none;
-}
-#msg{
-  margin-top:10px;
-  font-weight:bold;
-}
+  :root{
+    --bg:#0b0b0b;
+    --card:#111;
+    --line:rgba(255,255,255,.12);
+    --muted:#b8b8b8;
+    --accent:#d6b45a;
+    --radius:14px;
+  }
+  body{margin:0;padding:24px;font-family:system-ui;background:var(--bg);color:#fff}
+  .wrap{max-width:980px;margin:auto}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .between{justify-content:space-between}
+  h1,h2{margin:0 0 10px}
+  .muted{color:var(--muted);font-size:13px}
+  input,textarea,select,button{
+    width:100%;padding:11px;border-radius:12px;border:1px solid var(--line);
+    background:#0b0b0b;color:#fff;font-size:15px
+  }
+  textarea{min-height:88px}
+  button{cursor:pointer}
+  .btn{background:var(--accent);color:#000;border:none;font-weight:800}
+  .btn2{background:transparent;border:1px solid var(--line)}
+  .btnDanger{background:#ff4d4d;color:#000;border:none;font-weight:800}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+  .tab{padding:10px 12px;border-radius:999px;border:1px solid var(--line);background:transparent;color:#fff}
+  .tab.active{background:var(--accent);color:#000;border:none;font-weight:800}
+  .list{margin-top:12px;display:grid;gap:10px}
+  .item{border:1px solid var(--line);border-radius:14px;padding:12px;background:#0d0d0d}
+  .pill{font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:#fff}
+  .pill.off{opacity:.55}
+  .img{width:64px;height:64px;border-radius:12px;object-fit:cover;border:1px solid var(--line);background:#111}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .hide{display:none}
+  .hr{height:1px;background:var(--line);margin:14px 0}
+  .note{font-size:13px;color:var(--muted)}
 </style>
-
 </head>
+
 <body>
+<div class="wrap">
 
-<div class="card">
-<h2>لوحة تحكم مينيو جوت</h2>
+  <!-- AUTH -->
+  <div id="authCard" class="card">
+    <h1>لوحة تحكم مينيو جوت</h1>
+    <p class="muted">تسجيل دخول (حساب واحد للمطعم)</p>
+    <div class="grid2">
+      <input id="email" type="email" placeholder="الإيميل" />
+      <input id="password" type="password" placeholder="كلمة المرور" />
+    </div>
+    <div class="row">
+      <button id="loginBtn" class="btn">تسجيل دخول</button>
+    </div>
+    <p id="authMsg" class="muted"></p>
+  </div>
 
-<input id="name_ar" placeholder="اسم الوجبة (عربي)">
-<input id="price" type="number" step="0.001" placeholder="السعر">
-<input id="image" placeholder="رابط الصورة">
+  <!-- APP -->
+  <div id="app" class="hide">
+    <div class="card">
+      <div class="row between">
+        <div>
+          <h1 style="margin:0">لوحة التحكم</h1>
+          <div class="muted" id="userInfo"></div>
+        </div>
+        <div class="row">
+          <button id="logoutBtn" class="btn2">خروج</button>
+        </div>
+      </div>
 
-<button id="addBtn">إضافة وجبة</button>
+      <div class="tabs">
+        <button class="tab active" data-tab="items">الوجبات</button>
+        <button class="tab" data-tab="settings">إعدادات الشكل</button>
+      </div>
 
-<p id="msg"></p>
+      <!-- ITEMS TAB -->
+      <div id="tab-items">
+        <h2>الوجبات</h2>
+        <p class="muted">إضافة / تعديل / حذف / إخفاء</p>
+
+        <div class="hr"></div>
+
+        <h3 style="margin:0 0 8px">إضافة / تعديل وجبة</h3>
+        <div class="grid2">
+          <input id="name_ar" placeholder="اسم الوجبة (عربي)*" />
+          <input id="name_en" placeholder="Name (EN) اختياري" />
+        </div>
+        <div class="grid2">
+          <input id="price" type="number" step="0.001" placeholder="السعر (مثال 1.500)*" />
+          <select id="is_active">
+            <option value="true">ظاهر</option>
+            <option value="false">مخفي</option>
+          </select>
+        </div>
+        <div class="grid2">
+          <textarea id="desc_ar" placeholder="الوصف عربي (اختياري)"></textarea>
+          <textarea id="desc_en" placeholder="Description EN (optional)"></textarea>
+        </div>
+
+        <div class="grid3">
+          <input id="sort_order" type="number" placeholder="ترتيب الظهور (0..)" value="0" />
+          <input id="image_url" placeholder="رابط صورة (اختياري)" />
+          <input id="image_file" type="file" accept="image/*" />
+        </div>
+
+        <div class="actions">
+          <button id="saveBtn" class="btn">حفظ</button>
+          <button id="resetBtn" class="btn2">تفريغ</button>
+          <span class="note">تقدر تحط رابط صورة أو ترفع صورة (الرفع أفضل)</span>
+        </div>
+        <p id="saveMsg" class="muted"></p>
+
+        <div class="hr"></div>
+
+        <div class="row between">
+          <h3 style="margin:0">قائمة الوجبات</h3>
+          <button id="refreshBtn" class="btn2">تحديث</button>
+        </div>
+        <div id="itemsList" class="list"></div>
+      </div>
+
+      <!-- SETTINGS TAB -->
+      <div id="tab-settings" class="hide">
+        <h2>إعدادات الشكل</h2>
+        <p class="muted">لوجو + خلفية + لون زر</p>
+
+        <div class="hr"></div>
+
+        <div class="grid2">
+          <input id="brand_name" placeholder="اسم العرض (Brand name)" />
+          <input id="logo_url" placeholder="رابط اللوجو (URL)" />
+        </div>
+
+        <div class="grid2">
+          <input id="background_color" placeholder="لون الخلفية (مثال #0b0b0b)" />
+          <input id="background_image_url" placeholder="رابط صورة خلفية (اختياري)" />
+        </div>
+
+        <div class="grid2">
+          <input id="accent_color" placeholder="لون الأزرار (مثال #d6b45a)" />
+          <div></div>
+        </div>
+
+        <div class="actions">
+          <button id="saveSettingsBtn" class="btn">حفظ الإعدادات</button>
+          <button id="loadSettingsBtn" class="btn2">تحميل الإعدادات</button>
+        </div>
+        <p id="settingsMsg" class="muted"></p>
+
+        <p class="note">بعد ما نخلي menu.html يقرأ الإعدادات، أي تغيير هنا ينعكس على صفحة المينيو.</p>
+      </div>
+
+    </div>
+  </div>
+
 </div>
 
 <script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+  const supabase = createClient(
+    "https://dcenkkyxsklzhcnjycoc.supabase.co",
+    "sb_publishable_QnMtHgIxfr_CwM89PBKT7g_Li1VqRjp"
+  );
 
-const supabase = createClient(
-  "https://dcenkkyxsklzhcnjycoc.supabase.co",
-  "sb_publishable_QnMtHgIxfr_CwM89PBKT7g_Li1VqRjp"
-);
+  // UI refs
+  const authCard = document.getElementById("authCard");
+  const app = document.getElementById("app");
+  const authMsg = document.getElementById("authMsg");
+  const userInfo = document.getElementById("userInfo");
 
-const msg = document.getElementById("msg");
-const addBtn = document.getElementById("addBtn");
+  const emailEl = document.getElementById("email");
+  const passEl = document.getElementById("password");
+  document.getElementById("loginBtn").addEventListener("click", login);
+  document.getElementById("logoutBtn").addEventListener("click", logout);
 
-addBtn.addEventListener("click", async () => {
-  try{
-    msg.innerText = "جاري الإضافة...";
+  // Tabs
+  document.querySelectorAll(".tab").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+      const tab = btn.dataset.tab;
+      document.getElementById("tab-items").classList.toggle("hide", tab!=="items");
+      document.getElementById("tab-settings").classList.toggle("hide", tab!=="settings");
+    });
+  });
 
-    const name_ar = document.getElementById("name_ar").value.trim();
-    const priceStr = document.getElementById("price").value.trim();
-    let image = document.getElementById("image").value.trim();
+  // Item form
+  const nameAr = document.getElementById("name_ar");
+  const nameEn = document.getElementById("name_en");
+  const price = document.getElementById("price");
+  const descAr = document.getElementById("desc_ar");
+  const descEn = document.getElementById("desc_en");
+  const isActive = document.getElementById("is_active");
+  const sortOrder = document.getElementById("sort_order");
+  const imageUrl = document.getElementById("image_url");
+  const imageFile = document.getElementById("image_file");
+  const saveMsg = document.getElementById("saveMsg");
+  const itemsList = document.getElementById("itemsList");
 
-    if(!name_ar){
-      msg.innerText = "اكتب اسم الوجبة.";
+  let editingId = null;
+  document.getElementById("saveBtn").addEventListener("click", saveItem);
+  document.getElementById("resetBtn").addEventListener("click", resetForm);
+  document.getElementById("refreshBtn").addEventListener("click", loadItems);
+
+  // Settings form
+  const brandName = document.getElementById("brand_name");
+  const logoUrl = document.getElementById("logo_url");
+  const bgColor = document.getElementById("background_color");
+  const bgImageUrl = document.getElementById("background_image_url");
+  const accentColor = document.getElementById("accent_color");
+  const settingsMsg = document.getElementById("settingsMsg");
+  document.getElementById("saveSettingsBtn").addEventListener("click", saveSettings);
+  document.getElementById("loadSettingsBtn").addEventListener("click", loadSettings);
+
+  function setMsg(el, txt){ el.textContent = txt || ""; }
+
+  async function login(){
+    setMsg(authMsg, "...");
+    const { error } = await supabase.auth.signInWithPassword({
+      email: emailEl.value.trim(),
+      password: passEl.value
+    });
+    if(error) return setMsg(authMsg, "خطأ: " + error.message);
+    await boot();
+  }
+
+  async function logout(){
+    await supabase.auth.signOut();
+    await boot();
+  }
+
+  async function boot(){
+    const { data } = await supabase.auth.getSession();
+    const session = data.session;
+
+    if(!session){
+      authCard.classList.remove("hide");
+      app.classList.add("hide");
       return;
     }
 
-    const price = Number(priceStr);
-    if(!Number.isFinite(price)){
-      msg.innerText = "اكتب سعر صحيح مثل 1.500";
-      return;
-    }
+    authCard.classList.add("hide");
+    app.classList.remove("hide");
+    userInfo.textContent = "مسجل دخول: " + session.user.email;
 
-    if(image && !image.startsWith("http")){
-      image = "https://" + image;
-    }
+    await loadItems();
+    await loadSettings();
+  }
 
-    const { error } = await supabase
+  async function uploadImageIfAny(){
+    const file = imageFile.files?.[0];
+    if(!file) return null;
+
+    const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+    const path = `items/${crypto.randomUUID()}.${ext}`;
+
+    const { error: upErr } = await supabase.storage
+      .from("menu-images")
+      .upload(path, file, { upsert:false, contentType: file.type });
+
+    if(upErr) throw upErr;
+
+    const { data } = supabase.storage.from("menu-images").getPublicUrl(path);
+    return data.publicUrl;
+  }
+
+  async function saveItem(){
+    try{
+      setMsg(saveMsg, "جاري الحفظ...");
+      const payload = {
+        name_ar: nameAr.value.trim(),
+        name_en: nameEn.value.trim() || null,
+        price: Number(price.value),
+        desc_ar: descAr.value.trim() || null,
+        desc_en: descEn.value.trim() || null,
+        is_active: isActive.value === "true",
+        sort_order: Number(sortOrder.value || 0),
+      };
+
+      if(!payload.name_ar) return setMsg(saveMsg, "اكتب اسم الوجبة بالعربي.");
+      if(!Number.isFinite(payload.price)) return setMsg(saveMsg, "اكتب سعر صحيح مثل 1.500");
+
+      // image: file preferred, else url
+      let finalImage = null;
+      if(imageFile.files?.length){
+        finalImage = await uploadImageIfAny();
+      } else if(imageUrl.value.trim()){
+        let u = imageUrl.value.trim();
+        if(!u.startsWith("http://") && !u.startsWith("https://")) u = "https://" + u;
+        finalImage = u;
+      }
+      if(finalImage) payload.image_url = finalImage;
+
+      if(editingId){
+        const { error } = await supabase.from("menu_items").update(payload).eq("id", editingId);
+        if(error) throw error;
+        setMsg(saveMsg, "تم التعديل ✅");
+      } else {
+        const { error } = await supabase.from("menu_items").insert(payload);
+        if(error) throw error;
+        setMsg(saveMsg, "تمت الإضافة ✅");
+      }
+
+      resetForm();
+      await loadItems();
+    }catch(e){
+      setMsg(saveMsg, "خطأ: " + e.message);
+    }
+  }
+
+  function resetForm(){
+    editingId = null;
+    nameAr.value = "";
+    nameEn.value = "";
+    price.value = "";
+    descAr.value = "";
+    descEn.value = "";
+    isActive.value = "true";
+    sortOrder.value = "0";
+    imageUrl.value = "";
+    imageFile.value = "";
+    setMsg(saveMsg, "");
+  }
+
+  async function loadItems(){
+    itemsList.innerHTML = `<div class="muted">جاري التحميل...</div>`;
+    const { data, error } = await supabase
       .from("menu_items")
-      .insert([{ name_ar, price, image_url:image || null }]);
+      .select("id,name_ar,price,is_active,sort_order,image_url,created_at")
+      .order("sort_order", { ascending:true })
+      .order("created_at", { ascending:false });
 
     if(error){
-      msg.innerText = "خطأ: " + error.message;
-    }else{
-      msg.innerText = "تمت الإضافة بنجاح ✅";
-      document.getElementById("name_ar").value="";
-      document.getElementById("price").value="";
-      document.getElementById("image").value="";
+      itemsList.innerHTML = `<div class="muted">خطأ: ${error.message}</div>`;
+      return;
+    }
+    if(!data.length){
+      itemsList.innerHTML = `<div class="muted">لا توجد وجبات</div>`;
+      return;
     }
 
-  }catch(e){
-    msg.innerText = "خطأ غير متوقع: " + e.message;
+    itemsList.innerHTML = "";
+    for(const it of data){
+      const div = document.createElement("div");
+      div.className = "item";
+      div.innerHTML = `
+        <div class="row between">
+          <div class="row" style="gap:12px">
+            <img class="img" src="${it.image_url || ""}" onerror="this.style.display='none'">
+            <div>
+              <div style="font-weight:900;font-size:16px">${it.name_ar}</div>
+              <div class="muted">${Number(it.price).toFixed(3)} ر.ع • ترتيب: ${it.sort_order ?? 0}</div>
+            </div>
+          </div>
+          <span class="pill ${it.is_active ? "" : "off"}">${it.is_active ? "ظاهر" : "مخفي"}</span>
+        </div>
+
+        <div class="actions">
+          <button class="btn2" data-edit="${it.id}">تعديل</button>
+          <button class="btn2" data-toggle="${it.id}">${it.is_active ? "إخفاء" : "إظهار"}</button>
+          <button class="btnDanger" data-del="${it.id}">حذف</button>
+        </div>
+      `;
+      itemsList.appendChild(div);
+    }
+
+    // bind buttons
+    itemsList.querySelectorAll("[data-edit]").forEach(b=>{
+      b.addEventListener("click", ()=> startEdit(b.getAttribute("data-edit")));
+    });
+    itemsList.querySelectorAll("[data-toggle]").forEach(b=>{
+      b.addEventListener("click", ()=> toggleActive(b.getAttribute("data-toggle")));
+    });
+    itemsList.querySelectorAll("[data-del]").forEach(b=>{
+      b.addEventListener("click", ()=> deleteItem(b.getAttribute("data-del")));
+    });
   }
-});
 
+  async function startEdit(id){
+    const { data, error } = await supabase
+      .from("menu_items")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if(error) return setMsg(saveMsg, "خطأ: " + error.message);
+
+    editingId = id;
+    nameAr.value = data.name_ar || "";
+    nameEn.value = data.name_en || "";
+    price.value = data.price ?? "";
+    descAr.value = data.desc_ar || "";
+    descEn.value = data.desc_en || "";
+    isActive.value = String(!!data.is_active);
+    sortOrder.value = data.sort_order ?? 0;
+    imageUrl.value = data.image_url || "";
+    imageFile.value = "";
+    setMsg(saveMsg, "وضع التعديل: عدّل الحقول ثم اضغط حفظ ✅");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  async function toggleActive(id){
+    const { data, error } = await supabase.from("menu_items").select("is_active").eq("id", id).single();
+    if(error) return alert("خطأ: " + error.message);
+
+    const next = !data.is_active;
+    const { error: upErr } = await supabase.from("menu_items").update({ is_active: next }).eq("id", id);
+    if(upErr) return alert("خطأ: " + upErr.message);
+
+    await loadItems();
+  }
+
+  async function deleteItem(id){
+    const ok = confirm("متأكد تحذف الوجبة؟");
+    if(!ok) return;
+    const { error } = await supabase.from("menu_items").delete().eq("id", id);
+    if(error) return alert("خطأ: " + error.message);
+    await loadItems();
+  }
+
+  async function loadSettings(){
+    setMsg(settingsMsg, "جاري التحميل...");
+    const { data, error } = await supabase
+      .from("menu_settings")
+      .select("*")
+      .eq("id", 1)
+      .single();
+
+    if(error){
+      setMsg(settingsMsg, "خطأ: " + error.message);
+      return;
+    }
+
+    brandName.value = data.brand_name || "";
+    logoUrl.value = data.logo_url || "";
+    bgColor.value = data.background_color || "#0b0b0b";
+    bgImageUrl.value = data.background_image_url || "";
+    accentColor.value = data.accent_color || "#d6b45a";
+
+    setMsg(settingsMsg, "تم تحميل الإعدادات ✅");
+  }
+
+  async function saveSettings(){
+    setMsg(settingsMsg, "جاري الحفظ...");
+    const payload = {
+      brand_name: brandName.value.trim() || "GOAT Menu",
+      logo_url: logoUrl.value.trim() || null,
+      background_color: bgColor.value.trim() || "#0b0b0b",
+      background_image_url: bgImageUrl.value.trim() || null,
+      accent_color: accentColor.value.trim() || "#d6b45a",
+    };
+    const { error } = await supabase.from("menu_settings").update(payload).eq("id", 1);
+    if(error) return setMsg(settingsMsg, "خطأ: " + error.message);
+    setMsg(settingsMsg, "تم حفظ الإعدادات ✅");
+  }
+
+  // start
+  boot();
 </script>
-
 </body>
 </html>
